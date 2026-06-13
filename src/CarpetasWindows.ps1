@@ -34,21 +34,24 @@ function Mostrar-CarpetasWindows {
     $formCarpetas.Size = New-Object System.Drawing.Size(420,550)
     $formCarpetas.StartPosition = "CenterScreen"
 
-    function Crear-BotonCarpeta {
-        param(
-            [string]$Texto,
-            [int]$Y,
-            [scriptblock]$Accion
-        )
+   function Crear-BotonCarpeta {
+    param(
+        [string]$Texto,
+        [int]$Y,
+        [scriptblock]$Accion
+    )
 
-        $btn = New-Object System.Windows.Forms.Button
-        $btn.Text = $Texto
-        $btn.Size = New-Object System.Drawing.Size(300,35)
-        $btn.Location = New-Object System.Drawing.Point(40,$Y)
-        $btn.Add_Click($Accion)
+    $btn = New-Object System.Windows.Forms.Button
+    $btn.Text = $Texto
+    $btn.Size = New-Object System.Drawing.Size(300,35)
 
-        $formCarpetas.Controls.Add($btn)
-    }
+    $x = ($formCarpetas.ClientSize.Width - $btn.Width) / 2
+    $btn.Location = New-Object System.Drawing.Point($x,$Y)
+
+    $btn.Add_Click($Accion)
+
+    $formCarpetas.Controls.Add($btn)
+}
 
     Crear-BotonCarpeta "Roaming" 40 {
     Abrir-AppData

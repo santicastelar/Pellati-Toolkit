@@ -53,8 +53,10 @@ function Crear-Boton {
     $btn = New-Object System.Windows.Forms.Button
     $btn.Text = $Texto
     $btn.Size = New-Object System.Drawing.Size(340,36)
-    $x = ($form.ClientSize.Width - $btn.Width) / 2
-$btn.Location = New-Object System.Drawing.Point($x,$Y)
+
+    $x = [int](($form.ClientSize.Width - $btn.Width) / 2)
+    $btn.Location = New-Object System.Drawing.Point($x, $Y)
+
     $btn.Font = New-Object System.Drawing.Font("Segoe UI",10)
     $btn.Add_Click($Accion)
 
@@ -62,8 +64,13 @@ $btn.Location = New-Object System.Drawing.Point($x,$Y)
 }
 
 # Botones
-Crear-Boton "Configurar energia" 100 {
-    Configurar-Energia
+
+Crear-Boton "Sistema" 100 {
+    Mostrar-Sistema
+}
+
+Crear-Boton "Carpetas de Windows" 145 {
+    Mostrar-CarpetasWindows
 }
 
 Crear-Boton "Mostrar extensiones" 145 {
