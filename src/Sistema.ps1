@@ -40,6 +40,17 @@ function Abrir-CredencialesWindows {
 }
 function Exportar-UnidadesMapeadas {
 
+    $respuesta = [System.Windows.Forms.MessageBox]::Show(
+        "Se exportaran las unidades de red mapeadas a un archivo TXT en el Escritorio.`n`nDesea continuar?",
+        "Exportar unidades de red",
+        [System.Windows.Forms.MessageBoxButtons]::YesNo,
+        [System.Windows.Forms.MessageBoxIcon]::Question
+    )
+
+    if ($respuesta -ne [System.Windows.Forms.DialogResult]::Yes) {
+        return
+    }
+
     $ruta = "$env:USERPROFILE\Desktop\UnidadesMapeadas.txt"
 
     $contenido = @()
@@ -72,7 +83,9 @@ function Exportar-UnidadesMapeadas {
 
     [System.Windows.Forms.MessageBox]::Show(
         "Backup guardado en:`n$ruta",
-        "Pellati-Toolkit"
+        "Pellati-Toolkit",
+        [System.Windows.Forms.MessageBoxButtons]::OK,
+        [System.Windows.Forms.MessageBoxIcon]::Information
     )
 }
 function Mostrar-Sistema {
@@ -290,19 +303,52 @@ if ([string]::IsNullOrWhiteSpace($password)) {
     }
 
     $btnActualizar = New-Object System.Windows.Forms.Button
-    $btnActualizar.Text = "Actualizar"
-    $btnActualizar.Size = New-Object System.Drawing.Size(120,35)
-    $btnActualizar.Location = New-Object System.Drawing.Point(250,320)
+$btnActualizar.Text = "Actualizar"
+$btnActualizar.Size = New-Object System.Drawing.Size(120,35)
+$btnActualizar.Location = New-Object System.Drawing.Point(190,320)
 
-    $btnActualizar.Add_Click({
-        Actualizar-RecursosCompartidos
-    })
-
-    $formShares.Controls.Add($btnActualizar)
-
+$btnActualizar.Add_Click({
     Actualizar-RecursosCompartidos
+})
 
-    [void]$formShares.ShowDialog()
+$formShares.Controls.Add($btnActualizar)
+
+$btnExportar = New-Object System.Windows.Forms.Button
+$btnExportar.Text = "Exportar TXT"
+$btnExportar.Size = New-Object System.Drawing.Size(120,35)
+$btnExportar.Location = New-Object System.Drawing.Point(340,320)
+
+$btnExportar.Add_Click({
+    try {
+        $ruta = "$env:USERPROFILE\Desktop\RecursosCompartidos.txt"
+
+        Get-SmbShare |
+            Select-Object Name, Path, Description |
+            Format-Table -AutoSize |
+            Out-File $ruta -Encoding UTF8
+
+        [System.Windows.Forms.MessageBox]::Show(
+            "Backup guardado en:`n$ruta",
+            "Pellati-Toolkit",
+            [System.Windows.Forms.MessageBoxButtons]::OK,
+            [System.Windows.Forms.MessageBoxIcon]::Information
+        )
+    }
+    catch {
+        [System.Windows.Forms.MessageBox]::Show(
+            "No se pudieron exportar los recursos compartidos.",
+            "Error",
+            [System.Windows.Forms.MessageBoxButtons]::OK,
+            [System.Windows.Forms.MessageBoxIcon]::Error
+        )
+    }
+})
+
+$formShares.Controls.Add($btnExportar)
+
+Actualizar-RecursosCompartidos
+
+[void]$formShares.ShowDialog()
 }
 Crear-BotonSistema "Iconos de escritorio" 40 {
     Abrir-IconosEscritorio
