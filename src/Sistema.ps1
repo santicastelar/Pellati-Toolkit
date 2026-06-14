@@ -1,4 +1,4 @@
-function Abrir-NombreEquipo {
+﻿function Abrir-NombreEquipo {
     Start-Process "sysdm.cpl"
 }
 function Abrir-AcercaEquipo {
@@ -26,22 +26,60 @@ function Abrir-ProgramasInstalados {
 function Abrir-AppsInicio {
     Start-Process "ms-settings:startupapps"
 }
+
 function Abrir-AdministradorDispositivos {
     Start-Process "devmgmt.msc"
 }
 
-function Abrir-AdministracionDiscos {
-    Start-Process "diskmgmt.msc"
-}
-
 function Abrir-Servicios {
     Start-Process "services.msc"
+    
+}
+function Abrir-CredencialesWindows {
+    Start-Process "control.exe" -ArgumentList "/name Microsoft.CredentialManager"
+}
+function Exportar-UnidadesMapeadas {
+
+    $ruta = "$env:USERPROFILE\Desktop\UnidadesMapeadas.txt"
+
+    $contenido = @()
+
+    $contenido += "UNIDADES MAPEADAS - NET USE"
+    $contenido += "============================"
+    $contenido += (net use)
+    $contenido += ""
+
+    $contenido += "UNIDADES PERSISTENTES - REGISTRO"
+    $contenido += "================================"
+
+    $networkPath = "HKCU:\Network"
+
+    if (Test-Path $networkPath) {
+        Get-ChildItem $networkPath | ForEach-Object {
+            $drive = Split-Path $_.Name -Leaf
+            $props = Get-ItemProperty $_.PsPath
+
+            $contenido += "Unidad: $drive`:"
+            $contenido += "Ruta: $($props.RemotePath)"
+            $contenido += ""
+        }
+    }
+    else {
+        $contenido += "No se encontraron unidades en HKCU:\Network."
+    }
+
+    $contenido | Out-File $ruta -Encoding UTF8
+
+    [System.Windows.Forms.MessageBox]::Show(
+        "Backup guardado en:`n$ruta",
+        "Pellati-Toolkit"
+    )
 }
 function Mostrar-Sistema {
 
     $formSistema = New-Object System.Windows.Forms.Form
     $formSistema.Text = "Sistema"
-    $formSistema.ClientSize = New-Object System.Drawing.Size(420,900)
+    $formSistema.ClientSize = New-Object System.Drawing.Size(420,980)
     $formSistema.StartPosition = "CenterScreen"
     $formSistema.BackColor = [System.Drawing.Color]::FromArgb(245,245,245)
 
@@ -64,7 +102,160 @@ function Mostrar-Sistema {
 
         $formSistema.Controls.Add($btn)
     }
-function Mostrar-RecursosCompartidos {
+Add-Type @"
+using System;
+using System.Runtime.InteropServices;
+
+public class LogonHelper {
+    [DllImport("advapi32.dll", SetLastError=true, CharSet=CharSet.Unicode)]
+    public static extern bool LogonUser(
+        string lpszUsername,
+        string lpszDomain,
+        string lpszPassword,
+        int dwLogonType,
+        int dwLogonProvider,
+        out IntPtr phToken
+    );
+
+    [DllImport("kernel32.dll", SetLastError=true)]
+    public static extern bool CloseHandle(IntPtr hObject);
+}
+"@
+
+function Probar-CredencialLocal {
+    param(
+        [string]$Usuario,
+        [string]$Dominio,
+        [string]$Password
+    )
+
+    $token = [IntPtr]::Zero
+    $ok = [LogonHelper]::LogonUser($Usuario, $Dominio, $Password, 2, 0, [ref]$token)
+
+    if ($token -ne [IntPtr]::Zero) {
+        [LogonHelper]::CloseHandle($token) | Out-Null
+    }
+
+    return $ok
+}
+
+function Pedir-PasswordUsuario {
+    param(
+        [string]$UsuarioCompleto
+    )
+
+    $formPass = New-Object System.Windows.Forms.Form
+    $formPass.Text = "Contraseña del usuario"
+    $formPass.ClientSize = New-Object System.Drawing.Size(420,160)
+    $formPass.StartPosition = "CenterScreen"
+    $formPass.FormBorderStyle = "FixedDialog"
+    $formPass.MaximizeBox = $false
+    $formPass.MinimizeBox = $false
+
+    $lbl = New-Object System.Windows.Forms.Label
+    $lbl.Text = "Ingrese la contraseña de:`n$UsuarioCompleto"
+    $lbl.AutoSize = $true
+    $lbl.Location = New-Object System.Drawing.Point(25,20)
+    $formPass.Controls.Add($lbl)
+
+    $txt = New-Object System.Windows.Forms.TextBox
+    $txt.Size = New-Object System.Drawing.Size(360,25)
+    $txt.Location = New-Object System.Drawing.Point(25,70)
+    $txt.UseSystemPasswordChar = $true
+    $formPass.Controls.Add($txt)
+
+    $btnOk = New-Object System.Windows.Forms.Button
+    $btnOk.Text = "Aceptar"
+    $btnOk.Size = New-Object System.Drawing.Size(100,30)
+    $btnOk.Location = New-Object System.Drawing.Point(175,110)
+    $btnOk.DialogResult = [System.Windows.Forms.DialogResult]::OK
+    $formPass.AcceptButton = $btnOk
+    $formPass.Controls.Add($btnOk)
+
+    if ($formPass.ShowDialog() -eq [System.Windows.Forms.DialogResult]::OK) {
+        return $txt.Text
+    }
+
+    return $null
+}
+
+function Exportar-UsuarioActual {
+
+    $usuario = $env:USERNAME
+    $dominio = $env:USERDOMAIN
+    $usuarioCompleto = "$dominio\$usuario"
+    $ruta = "$env:USERPROFILE\Desktop\Backup_Usuario.txt"
+
+    if (Probar-CredencialLocal -Usuario $usuario -Dominio $dominio -Password "") {
+
+        $contenido = @()
+        $contenido += "BACKUP USUARIO ACTUAL"
+        $contenido += "====================="
+        $contenido += ""
+        $contenido += "Usuario: $usuarioCompleto"
+        $contenido += "Contraseña: La cuenta no contiene contraseña."
+        $contenido += ""
+        $contenido += "Fecha: $(Get-Date -Format 'dd/MM/yyyy HH:mm:ss')"
+
+        $contenido | Out-File $ruta -Encoding UTF8
+
+        [System.Windows.Forms.MessageBox]::Show(
+            "Backup guardado en:`n$ruta`n`nLa cuenta no contiene contraseña.",
+            "Pellati-Toolkit"
+        )
+
+        return
+    }
+
+    do {
+        $password = Pedir-PasswordUsuario -UsuarioCompleto $usuarioCompleto
+
+ if ($null -eq $password) {
+    return
+}
+
+if ([string]::IsNullOrWhiteSpace($password)) {
+    [System.Windows.Forms.MessageBox]::Show(
+        "Debe ingresar una contraseña para continuar.",
+        "Pellati-Toolkit",
+        [System.Windows.Forms.MessageBoxButtons]::OK,
+        [System.Windows.Forms.MessageBoxIcon]::Warning
+    )
+    continue
+}
+
+        $esCorrecta = Probar-CredencialLocal -Usuario $usuario -Dominio $dominio -Password $password
+
+        if (-not $esCorrecta) {
+            [System.Windows.Forms.MessageBox]::Show(
+                "La contraseña ingresada no es correcta. Intente nuevamente.",
+                "Pellati-Toolkit",
+                [System.Windows.Forms.MessageBoxButtons]::OK,
+                [System.Windows.Forms.MessageBoxIcon]::Error
+            )
+        }
+
+    } until ($esCorrecta)
+
+    $contenido = @()
+    $contenido += "BACKUP USUARIO ACTUAL"
+    $contenido += "====================="
+    $contenido += ""
+    $contenido += "Usuario: $usuarioCompleto"
+    $contenido += "Contraseña: $password"
+    $contenido += ""
+    $contenido += "Fecha: $(Get-Date -Format 'dd/MM/yyyy HH:mm:ss')"
+
+    $contenido | Out-File $ruta -Encoding UTF8
+
+    [System.Windows.Forms.MessageBox]::Show(
+        "Backup guardado en:`n$ruta",
+        "Pellati-Toolkit",
+        [System.Windows.Forms.MessageBoxButtons]::OK,
+        [System.Windows.Forms.MessageBoxIcon]::Information
+    )
+}
+    function Mostrar-RecursosCompartidos {
 
     $formShares = New-Object System.Windows.Forms.Form
     $formShares.Text = "Recursos compartidos"
@@ -113,61 +304,68 @@ function Mostrar-RecursosCompartidos {
 
     [void]$formShares.ShowDialog()
 }
-Crear-BotonSistema "Acerca del equipo" 40 {
-    Abrir-AcercaEquipo
-}
-
-Crear-BotonSistema "Nombre del equipo" 95 {
-    Abrir-NombreEquipo
-}
-
-Crear-BotonSistema "Programas instalados" 150 {
-    Abrir-ProgramasInstalados
-}
-
-Crear-BotonSistema "Programas al inicio" 205 {
-    Abrir-AppsInicio
-}
-
-Crear-BotonSistema "Administrador de tareas" 260 {
-    Abrir-Taskmgr
-}
-
-Crear-BotonSistema "Administrador de dispositivos" 315 {
-    Abrir-AdministradorDispositivos
-}
-
-Crear-BotonSistema "Administracion de discos" 370 {
-    Abrir-AdministracionDiscos
-}
-
-Crear-BotonSistema "Servicios" 425 {
-    Abrir-Servicios
-}
-
-Crear-BotonSistema "Iconos de escritorio" 480 {
+Crear-BotonSistema "Iconos de escritorio" 40 {
     Abrir-IconosEscritorio
 }
 
-Crear-BotonSistema "Opciones de carpeta" 535 {
-    Abrir-OpcionesCarpeta
+Crear-BotonSistema "Acerca del equipo" 95 {
+    Abrir-AcercaEquipo
 }
 
-Crear-BotonSistema "Seguridad de Windows" 590 {
+Crear-BotonSistema "Nombre del equipo" 150 {
+    Abrir-NombreEquipo
+}
+
+Crear-BotonSistema "Backup Usuario y Contraseña" 205 {
+    Exportar-UsuarioActual
+}
+
+Crear-BotonSistema "Backup unidades de red" 260 {
+    Exportar-UnidadesMapeadas
+}
+
+Crear-BotonSistema "Recursos compartidos" 315 {
+    Mostrar-RecursosCompartidos
+}
+
+Crear-BotonSistema "Credenciales de Windows" 370 {
+    Abrir-CredencialesWindows
+}
+
+Crear-BotonSistema "Seguridad de Windows" 425 {
     Abrir-SeguridadWindows
 }
 
-Crear-BotonSistema "Proteccion del sistema" 645 {
+Crear-BotonSistema "Programas instalados" 480 {
+    Abrir-ProgramasInstalados
+}
+
+Crear-BotonSistema "Programas al inicio" 535 {
+    Abrir-AppsInicio
+}
+
+Crear-BotonSistema "Administrador de tareas" 590 {
+    Abrir-Taskmgr
+}
+
+Crear-BotonSistema "Administrador de dispositivos" 645 {
+    Abrir-AdministradorDispositivos
+}
+
+Crear-BotonSistema "Servicios" 700 {
+    Abrir-Servicios
+}
+
+Crear-BotonSistema "Protección del sistema" 755 {
     Abrir-ProteccionSistema
 }
 
-Crear-BotonSistema "BitLocker C:" 700 {
-    Mostrar-BitLocker
+Crear-BotonSistema "Opciones de carpeta" 810 {
+    Abrir-OpcionesCarpeta
 }
-Crear-BotonSistema "Recursos compartidos" 755 {
-    Mostrar-RecursosCompartidos
-}
-Crear-BotonSistema "Configurar energia tecnica" 810 {
+
+Crear-BotonSistema "Configurar energía técnica" 865 {
+  
 
 $mensaje = @"
 Se aplicara la siguiente configuracion:
@@ -202,99 +400,4 @@ Desea continuar?
 
     [void]$formSistema.ShowDialog()
 }
-function Mostrar-BitLocker {
 
-    $formBitLocker = New-Object System.Windows.Forms.Form
-    $formBitLocker.Text = "BitLocker C:"
-    $formBitLocker.ClientSize = New-Object System.Drawing.Size(430,260)
-    $formBitLocker.StartPosition = "CenterScreen"
-
-    $txtEstado = New-Object System.Windows.Forms.TextBox
-    $txtEstado.Multiline = $true
-    $txtEstado.ReadOnly = $true
-    $txtEstado.ScrollBars = "Vertical"
-    $txtEstado.Size = New-Object System.Drawing.Size(360,120)
-    $txtEstado.Location = New-Object System.Drawing.Point(35,25)
-    $formBitLocker.Controls.Add($txtEstado)
-
-    function Actualizar-EstadoBitLocker {
-        try {
-            $vol = Get-BitLockerVolume -MountPoint "C:" -ErrorAction Stop
-
-            $txtEstado.Text = @"
-Unidad: $($vol.MountPoint)
-Estado: $($vol.VolumeStatus)
-Proteccion: $($vol.ProtectionStatus)
-Porcentaje cifrado: $($vol.EncryptionPercentage)%
-Metodo: $($vol.EncryptionMethod)
-"@
-        }
-        catch {
-            $txtEstado.Text = "No se pudo obtener el estado de BitLocker."
-        }
-    }
-
-    $btnActualizar = New-Object System.Windows.Forms.Button
-    $btnActualizar.Text = "Actualizar estado"
-    $btnActualizar.Size = New-Object System.Drawing.Size(160,35)
-    $btnActualizar.Location = New-Object System.Drawing.Point(35,165)
-    $btnActualizar.Add_Click({
-        Actualizar-EstadoBitLocker
-    })
-    $formBitLocker.Controls.Add($btnActualizar)
-
-    $btnDesactivar = New-Object System.Windows.Forms.Button
-    $btnDesactivar.Text = "Desactivar BitLocker"
-    $btnDesactivar.Size = New-Object System.Drawing.Size(170,35)
-    $btnDesactivar.Location = New-Object System.Drawing.Point(225,165)
-    $btnDesactivar.Add_Click({
-
-        try {
-            $vol = Get-BitLockerVolume -MountPoint "C:" -ErrorAction Stop
-
-            if ($vol.ProtectionStatus -eq "Off" -and $vol.VolumeStatus -eq "FullyDecrypted") {
-                [System.Windows.Forms.MessageBox]::Show(
-                    "BitLocker ya esta desactivado en la unidad C:.",
-                    "BitLocker",
-                    [System.Windows.Forms.MessageBoxButtons]::OK,
-                    [System.Windows.Forms.MessageBoxIcon]::Information
-                )
-
-                Actualizar-EstadoBitLocker
-                return
-            }
-
-            $respuesta = [System.Windows.Forms.MessageBox]::Show(
-                "Se desactivara BitLocker en la unidad C: y comenzara el descifrado. Desea continuar?",
-                "Confirmar BitLocker",
-                [System.Windows.Forms.MessageBoxButtons]::YesNo,
-                [System.Windows.Forms.MessageBoxIcon]::Warning
-            )
-
-            if ($respuesta -eq [System.Windows.Forms.DialogResult]::Yes) {
-                Disable-BitLocker -MountPoint "C:" -ErrorAction Stop
-                Actualizar-EstadoBitLocker
-
-                [System.Windows.Forms.MessageBox]::Show(
-                    "Se inicio la desactivacion de BitLocker. Use Actualizar estado para ver el progreso.",
-                    "BitLocker",
-                    [System.Windows.Forms.MessageBoxButtons]::OK,
-                    [System.Windows.Forms.MessageBoxIcon]::Information
-                )
-            }
-        }
-        catch {
-            [System.Windows.Forms.MessageBox]::Show(
-                "No se pudo consultar o modificar BitLocker en la unidad C:.",
-                "Error BitLocker",
-                [System.Windows.Forms.MessageBoxButtons]::OK,
-                [System.Windows.Forms.MessageBoxIcon]::Error
-            )
-        }
-    })
-    $formBitLocker.Controls.Add($btnDesactivar)
-
-    Actualizar-EstadoBitLocker
-
-    [void]$formBitLocker.ShowDialog()
-}

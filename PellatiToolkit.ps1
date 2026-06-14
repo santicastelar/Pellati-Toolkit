@@ -4,7 +4,7 @@ if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
     Start-Process powershell.exe "-ExecutionPolicy Bypass -File `"$PSCommandPath`"" -Verb RunAs
     exit
 }
-
+Add-Type -AssemblyName Microsoft.VisualBasic
 Add-Type -AssemblyName System.Windows.Forms
 Add-Type -AssemblyName System.Drawing
 
@@ -16,6 +16,7 @@ $ModulesPath = Join-Path $PSScriptRoot "src"
 . "$ModulesPath\Software.ps1"
 . "$ModulesPath\Red.ps1"
 . "$ModulesPath\CarpetasWindows.ps1"
+. "$ModulesPath\Disco.ps1"
 
 # Ventana principal
 $form = New-Object System.Windows.Forms.Form
@@ -69,8 +70,8 @@ Crear-Boton "Sistema" 100 {
     Mostrar-Sistema
 }
 
-Crear-Boton "Carpetas de Windows" 145 {
-    Mostrar-CarpetasWindows
+Crear-Boton "Disco" 145{
+    Mostrar-Disco
 }
 
 Crear-Boton "Mostrar extensiones" 145 {
