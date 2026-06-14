@@ -35,6 +35,10 @@ function Abrir-Servicios {
     Start-Process "services.msc"
     
 }
+function Abrir-EditarPlanEnergia {
+    Start-Process "powercfg.cpl"
+}
+
 function Abrir-CredencialesWindows {
     Start-Process "control.exe" -ArgumentList "/name Microsoft.CredentialManager"
 }
@@ -409,11 +413,12 @@ Crear-BotonSistema "Protección del sistema" 755 {
 Crear-BotonSistema "Opciones de carpeta" 810 {
     Abrir-OpcionesCarpeta
 }
-
+Crear-BotonSistema "Editar plan de energía" 920 {
+    Abrir-EditarPlanEnergia
+}
 Crear-BotonSistema "Configurar energía técnica" 865 {
-  
 
-$mensaje = @"
+    $mensaje = @"
 Se aplicara la siguiente configuracion:
 
 1. El equipo nunca se suspendera.
@@ -442,8 +447,6 @@ Desea continuar?
     }
 }
 
-
-
-    [void]$formSistema.ShowDialog()
+[void]$formSistema.ShowDialog()
 }
 
