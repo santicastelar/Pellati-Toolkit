@@ -17,6 +17,7 @@ $ModulesPath = Join-Path $PSScriptRoot "src"
 . "$ModulesPath\Red.ps1"
 . "$ModulesPath\CarpetasWindows.ps1"
 . "$ModulesPath\Disco.ps1"
+. "$ModulesPath\Programas.ps1"
 
 # Ventana principal
 $form = New-Object System.Windows.Forms.Form
@@ -70,50 +71,17 @@ Crear-Boton "Sistema" 100 {
     Mostrar-Sistema
 }
 
-Crear-Boton "Disco" 145{
+Crear-Boton "Disco" 145 {
     Mostrar-Disco
 }
 
-Crear-Boton "Mostrar extensiones" 145 {
-    Mostrar-Extensiones
+Crear-Boton "Programas" 190 {
+    Mostrar-Programas
 }
 
-Crear-Boton "Mostrar ocultos" 190 {
-    Mostrar-Ocultos
-}
-
-Crear-Boton "Desactivar inicio rapido" 235 {
-    Desactivar-InicioRapido
-}
-
-Crear-Boton "Limpiar temporales" 280 {
-    Limpiar-Temporales
-}
-
-Crear-Boton "Activar Restaurar Sistema" 325 {
-    Activar-RestaurarSistema
-}
-
-Crear-Boton "Opciones de energia" 370 {
-    Abrir-OpcionesEnergia
-}
-
-Crear-Boton "Aplicaciones de inicio" 415 {
-    Abrir-AppsInicio
-}
-Crear-Boton "Seguridad de Windows" 460 {
-    Abrir-SeguridadWindows
-}
-
-Crear-Boton "Configuracion iconos de escritorio" 505 {
-    Abrir-IconosEscritorio
-}
-
-
-Crear-Boton "Carpetas de Windows" 550 {
+Crear-Boton "Carpetas de Windows" 235 {
     Mostrar-CarpetasWindows
 }
-
 
 # Mostrar formulario
 [void]$form.ShowDialog()
