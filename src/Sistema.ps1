@@ -92,6 +92,67 @@ function Exportar-UnidadesMapeadas {
         [System.Windows.Forms.MessageBoxIcon]::Information
     )
 }
+function Exportar-NombreEquipo {
+
+    $respuesta = [System.Windows.Forms.MessageBox]::Show(
+@"
+En el escritorio se creará un archivo llamado "NombreEquipo.txt".
+
+El backup incluirá:
+
+- Nombre del equipo
+- Dominio
+- Grupo de trabajo
+
+¿Desea continuar?
+"@,
+        "Backup nombre del equipo",
+        [System.Windows.Forms.MessageBoxButtons]::YesNo,
+        [System.Windows.Forms.MessageBoxIcon]::Question
+    )
+
+    if ($respuesta -ne [System.Windows.Forms.DialogResult]::Yes) {
+        return
+    }
+
+    $ruta = "$env:USERPROFILE\Desktop\NombreEquipo.txt"
+
+    try {
+
+        $cs = Get-CimInstance Win32_ComputerSystem
+
+        $contenido = @()
+        $contenido += "BACKUP NOMBRE DEL EQUIPO"
+        $contenido += "========================"
+        $contenido += ""
+        $contenido += "Nombre del equipo: $($env:COMPUTERNAME)"
+
+        if ($cs.PartOfDomain) {
+            $contenido += "Dominio: $($cs.Domain)"
+        }
+        else {
+            $contenido += "Grupo de trabajo: $($cs.Workgroup)"
+        }
+
+        $contenido | Out-File $ruta -Encoding UTF8
+
+        [System.Windows.Forms.MessageBox]::Show(
+            "Backup guardado en:`n$ruta",
+            "Pellati-Toolkit",
+            [System.Windows.Forms.MessageBoxButtons]::OK,
+            [System.Windows.Forms.MessageBoxIcon]::Information
+        )
+    }
+    catch {
+
+        [System.Windows.Forms.MessageBox]::Show(
+            "No se pudo obtener la información del equipo.",
+            "Pellati-Toolkit",
+            [System.Windows.Forms.MessageBoxButtons]::OK,
+            [System.Windows.Forms.MessageBoxIcon]::Error
+        )
+    }
+}
 function Mostrar-Sistema {
     
 $formSistema = New-Object System.Windows.Forms.Form
@@ -297,65 +358,7 @@ if ([string]::IsNullOrWhiteSpace($password)) {
     $txtShares.Size = New-Object System.Drawing.Size(600,280)
     $txtShares.Location = New-Object System.Drawing.Point(20,20)
     $formShares.Controls.Add($txtShares)
-function Exportar-NombreEquipo {
 
-    $respuesta = [System.Windows.Forms.MessageBox]::Show(
-@"
-Se exportará la información del equipo:
-
-- Nombre del equipo
-- Dominio
-- Grupo de trabajo
-
-¿Desea continuar?
-"@,
-        "Backup nombre del equipo",
-        [System.Windows.Forms.MessageBoxButtons]::YesNo,
-        [System.Windows.Forms.MessageBoxIcon]::Question
-    )
-
-    if ($respuesta -ne [System.Windows.Forms.DialogResult]::Yes) {
-        return
-    }
-
-    $ruta = "$env:USERPROFILE\Desktop\NombreEquipo.txt"
-
-    try {
-
-        $cs = Get-CimInstance Win32_ComputerSystem
-
-        $contenido = @()
-        $contenido += "BACKUP NOMBRE DEL EQUIPO"
-        $contenido += "========================"
-        $contenido += ""
-        $contenido += "Nombre del equipo: $($env:COMPUTERNAME)"
-
-        if ($cs.PartOfDomain) {
-            $contenido += "Dominio: $($cs.Domain)"
-        }
-        else {
-            $contenido += "Grupo de trabajo: $($cs.Workgroup)"
-        }
-
-        $contenido | Out-File $ruta -Encoding UTF8
-
-        [System.Windows.Forms.MessageBox]::Show(
-            "Backup guardado en:`n$ruta",
-            "Pellati-Toolkit",
-            [System.Windows.Forms.MessageBoxButtons]::OK,
-            [System.Windows.Forms.MessageBoxIcon]::Information
-        )
-    }
-    catch {
-
-        [System.Windows.Forms.MessageBox]::Show(
-            "No se pudo obtener la información del equipo.",
-            "Pellati-Toolkit",
-            [System.Windows.Forms.MessageBoxButtons]::OK,
-            [System.Windows.Forms.MessageBoxIcon]::Error
-        )
-    }
-}
     function Actualizar-RecursosCompartidos {
 
         try {
