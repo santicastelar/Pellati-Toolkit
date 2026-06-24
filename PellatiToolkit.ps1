@@ -18,6 +18,8 @@ $ModulesPath = Join-Path $PSScriptRoot "src"
 . "$ModulesPath\CarpetasWindows.ps1"
 . "$ModulesPath\Disco.ps1"
 . "$ModulesPath\Programas.ps1"
+. "$ModulesPath\Office.ps1"
+."$ModulesPath\Herramientas.ps1"
 
 # Ventana principal
 $form = New-Object System.Windows.Forms.Form
@@ -82,7 +84,12 @@ Crear-Boton "Programas" 190 {
 Crear-Boton "Carpetas de Windows" 235 {
     Mostrar-CarpetasWindows
 }
-
+Crear-Boton "Office" 280 {
+    Mostrar-Office
+}
+Crear-Boton "Herramientas" 325 {
+    Mostrar-Herramientas
+}
 # Mostrar formulario
 [void]$form.ShowDialog()
 

@@ -93,13 +93,23 @@ function Exportar-UnidadesMapeadas {
     )
 }
 function Mostrar-Sistema {
+    
+$formSistema = New-Object System.Windows.Forms.Form
+$formSistema.Text = "Sistema"
+$formSistema.ClientSize = New-Object System.Drawing.Size(420,750)
+$formSistema.StartPosition = "CenterScreen"
+$formSistema.BackColor = [System.Drawing.Color]::FromArgb(245,245,245)
 
-    $formSistema = New-Object System.Windows.Forms.Form
-    $formSistema.Text = "Sistema"
-    $formSistema.ClientSize = New-Object System.Drawing.Size(420,980)
-    $formSistema.StartPosition = "CenterScreen"
-    $formSistema.BackColor = [System.Drawing.Color]::FromArgb(245,245,245)
+$panelSistema = New-Object System.Windows.Forms.Panel
+$panelSistema.Dock = "Fill"
+$panelSistema.AutoScroll = $true
+$panelSistema.BackColor = [System.Drawing.Color]::FromArgb(245,245,245)
+$formSistema.Controls.Add($panelSistema)
+$lblEspacio = New-Object System.Windows.Forms.Label
+$lblEspacio.Location = New-Object System.Drawing.Point(0,1150)
+$lblEspacio.Size = New-Object System.Drawing.Size(1,1)
 
+$panelSistema.Controls.Add($lblEspacio)
     function Crear-BotonSistema {
         param(
             [string]$Texto,
@@ -117,7 +127,7 @@ function Mostrar-Sistema {
         $btn.Font = New-Object System.Drawing.Font("Segoe UI",9)
         $btn.Add_Click($Accion)
 
-        $formSistema.Controls.Add($btn)
+        $panelSistema.Controls.Add($btn)
     }
 Add-Type @"
 using System;
@@ -287,7 +297,65 @@ if ([string]::IsNullOrWhiteSpace($password)) {
     $txtShares.Size = New-Object System.Drawing.Size(600,280)
     $txtShares.Location = New-Object System.Drawing.Point(20,20)
     $formShares.Controls.Add($txtShares)
+function Exportar-NombreEquipo {
 
+    $respuesta = [System.Windows.Forms.MessageBox]::Show(
+@"
+Se exportará la información del equipo:
+
+- Nombre del equipo
+- Dominio
+- Grupo de trabajo
+
+¿Desea continuar?
+"@,
+        "Backup nombre del equipo",
+        [System.Windows.Forms.MessageBoxButtons]::YesNo,
+        [System.Windows.Forms.MessageBoxIcon]::Question
+    )
+
+    if ($respuesta -ne [System.Windows.Forms.DialogResult]::Yes) {
+        return
+    }
+
+    $ruta = "$env:USERPROFILE\Desktop\NombreEquipo.txt"
+
+    try {
+
+        $cs = Get-CimInstance Win32_ComputerSystem
+
+        $contenido = @()
+        $contenido += "BACKUP NOMBRE DEL EQUIPO"
+        $contenido += "========================"
+        $contenido += ""
+        $contenido += "Nombre del equipo: $($env:COMPUTERNAME)"
+
+        if ($cs.PartOfDomain) {
+            $contenido += "Dominio: $($cs.Domain)"
+        }
+        else {
+            $contenido += "Grupo de trabajo: $($cs.Workgroup)"
+        }
+
+        $contenido | Out-File $ruta -Encoding UTF8
+
+        [System.Windows.Forms.MessageBox]::Show(
+            "Backup guardado en:`n$ruta",
+            "Pellati-Toolkit",
+            [System.Windows.Forms.MessageBoxButtons]::OK,
+            [System.Windows.Forms.MessageBoxIcon]::Information
+        )
+    }
+    catch {
+
+        [System.Windows.Forms.MessageBox]::Show(
+            "No se pudo obtener la información del equipo.",
+            "Pellati-Toolkit",
+            [System.Windows.Forms.MessageBoxButtons]::OK,
+            [System.Windows.Forms.MessageBoxIcon]::Error
+        )
+    }
+}
     function Actualizar-RecursosCompartidos {
 
         try {
@@ -366,57 +434,65 @@ Crear-BotonSistema "Nombre del equipo" 150 {
     Abrir-NombreEquipo
 }
 
-Crear-BotonSistema "Backup Usuario y Contraseña" 205 {
+Crear-BotonSistema "Backup nombre del equipo" 205 {
+    Exportar-NombreEquipo
+}
+
+Crear-BotonSistema "Backup Usuario y Contraseña" 260 {
     Exportar-UsuarioActual
 }
 
-Crear-BotonSistema "Backup unidades de red" 260 {
+Crear-BotonSistema "Backup unidades de red" 315 {
     Exportar-UnidadesMapeadas
 }
 
-Crear-BotonSistema "Recursos compartidos" 315 {
+Crear-BotonSistema "Recursos compartidos" 370 {
     Mostrar-RecursosCompartidos
 }
 
-Crear-BotonSistema "Credenciales de Windows" 370 {
+Crear-BotonSistema "Credenciales de Windows" 425 {
     Abrir-CredencialesWindows
 }
 
-Crear-BotonSistema "Seguridad de Windows" 425 {
+Crear-BotonSistema "Seguridad de Windows" 480 {
     Abrir-SeguridadWindows
 }
 
-Crear-BotonSistema "Programas instalados" 480 {
+Crear-BotonSistema "Programas instalados" 535 {
     Abrir-ProgramasInstalados
 }
 
-Crear-BotonSistema "Programas al inicio" 535 {
+Crear-BotonSistema "Programas al inicio" 590 {
     Abrir-AppsInicio
 }
 
-Crear-BotonSistema "Administrador de tareas" 590 {
+Crear-BotonSistema "Administrador de tareas" 645 {
     Abrir-Taskmgr
 }
 
-Crear-BotonSistema "Administrador de dispositivos" 645 {
+Crear-BotonSistema "Administrador de dispositivos" 700 {
     Abrir-AdministradorDispositivos
 }
 
-Crear-BotonSistema "Servicios" 700 {
+Crear-BotonSistema "Servicios" 755 {
     Abrir-Servicios
 }
 
-Crear-BotonSistema "Protección del sistema" 755 {
+Crear-BotonSistema "Protección del sistema" 810 {
     Abrir-ProteccionSistema
 }
 
-Crear-BotonSistema "Opciones de carpeta" 810 {
+Crear-BotonSistema "Opciones de carpeta" 865 {
     Abrir-OpcionesCarpeta
 }
+
 Crear-BotonSistema "Editar plan de energía" 920 {
     Abrir-EditarPlanEnergia
 }
-Crear-BotonSistema "Configurar energía técnica" 865 {
+
+Crear-BotonSistema "Configurar energía técnica" 975 {
+    Configurar-Energia
+
 
     $mensaje = @"
 Se aplicara la siguiente configuracion:
