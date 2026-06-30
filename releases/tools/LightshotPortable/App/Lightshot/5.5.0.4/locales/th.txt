@@ -1,0 +1,67 @@
+﻿[[screenshot_plugin.save]]=[[บันทึก]]
+[[screenshot_plugin.copy]]=[[คัดลอก]]
+[[screenshot_plugin.print]]=[[พิมพ์]]
+[[screenshot_plugin.fullscreen]]=[[เต็มหน้าจอ]]
+[[screenshot_plugin.clear]]=[[ล้าง]]
+[[screenshot_plugin.cancel]]=[[ยกเลิก]]
+[[screenshot_plugin.editonline]]=[[แก้ไขรูปภาพ]]
+[[screenshot_plugin.upload]]=[[อัพโหลดไปที่ prntscr.com]]
+[[screenshot_plugin.close]]=[[ปิด]]
+
+[[screenshot_plugin.share_googlesearch]]=[[ค้นหารูปที่คล้ายกันจาก Google]]
+[[screenshot_plugin.share_tineyesearch]]=[[ค้นหารูปที่คล้ายกันจาก Tineye]]
+[[screenshot_plugin.share_sendmail]]=[[ส่งผ่าน Email]]
+[[screenshot_plugin.share_twitter]]=[[แชร์ไปที่ Twitter]]
+[[screenshot_plugin.share_facebook]]=[[แชร์ไปที่ Facebook]]
+[[screenshot_plugin.share_pinterest]]=[[แชร์ไปยัง Pinterest]]
+
+[[screenshot_plugin.incorrect_size]]=[[ขนาดของรูปไม่ถูกต้อง]]
+[[screenshot_plugin.error_capt]]=[[ผิดพลาด]]
+
+[[screenshot_plugin.tooltip]]=[[เลือกพื้นที่ของภาพ]]
+[[screenshot_plugin.open]]=[[เปิด]]
+[[screenshot_plugin.uploading_window_capt]]=[[กำลังอัพโหลดรูป]]
+[[screenshot_plugin.upload_failed_retry]]=[[การอัพโหลดผิดพลาด, ท่านจะลองอีกครั้งหรือไม่?]]
+
+[[screenshot_app.take_screenshot]]=[[เก็บภาพหน้าจอ]]
+[[screenshot_app.about]]=[[เกี่ยวกับ Lightshot]]
+[[screenshot_app.exit]]=[[ออกจากโปรแกรม]]
+[[screenshot_app.copyright]]=[[สงวนลิขสิทธิ์โดย %company%]]
+[[screenshot_app.terms]]=[[ข้อกำหนดในการให้บริการ]]
+[[screenshot_app.tray_tooltip]]=[[กดปุ่ม "%hotkey_main%" บนแป้นพิมพ์เพื่อทำการเก็บภาพหน้าจอ]]
+
+[[screenshotplugin_name]]=[[Lightshot (screenshot tool)]]
+[[screenshotplugin_short_description]]=[[Easy and convenient screen capture tool. Allows you to make screenshot of any selected area, edit and upload it to server.]]
+[[screenshotplugin_default_title]]=[[Take Screenshot]]
+
+[[screenshot_app.menu.sign_in]]=[[กำลังเข้าระบบ...]]
+
+
+[[screenshot_plugin.screenshot_error_reload_browser]]=[[ผิดพลาด: Lightshot ไม่สามารถถ่ายภาพหน้าจอได้ ลองทำการรีโหลดเบราว์เซอร์ของคุณใหม่ หากคุณยังพบข้อผิดพลาดนี้อีก กรุณาติดต่อเราที่ support@skillbrains.com\n\nข้อมูอลผิดพลาด: ]]
+[[screenshot_plugin.ctypes_error]]=[[ผิดพลาด: การโหลด CTypes ของ Firefox สำหรับ Lightshot ล้มเหลว ลองรีโหลดเบราว์เซอร์ของคุณใหม่ หากยังเห็นข้อผิดพลาดนี้อีก กรุณาติดต่อเราที่ support@skillbrains.com\n\nข้อมูลผิดพลาด: ]]
+
+[[screenshot_plugin.edit_pencil]]=[[Pen]]
+[[screenshot_plugin.edit_color]]=[[ชุดสี]]
+[[screenshot_plugin.edit_blur]]=[[เบลอ]]
+
+
+[[screenshot_app.options.autoclose]]=[[ปิดหน้าต่างอัปโหลดอัตโนมัติ]]
+[[screenshot_app.options.language]]=[[ภาษา]]
+[[screenshot_app.options.httpsproxy]]=[[พร็อกซี่ HTTP(S)]]
+[[screenshot_app.options.formats]]=[[รูปแบบ]]
+[[screenshot_app.options.uploadformat]]=[[อัปโหลดโดยใช้รูปแบบที่กำหนด]]
+[[screenshot_app.options.jpegquality]]=[[คุณภาพของ JPEG]]
+
+
+
+[[screenshot_plugin.upload_error_capt]]=[[อัปโหลดผิดพลาด]]
+
+[[screenshot_app.options.configure_system_proxy]]=[[กำหนดค่า]]
+
+[[screenshot_plugin.upload_failed]]=[[อัปโหลดล้มเหลว]]
+[[screenshot_plugin.upl_fail.lightshot_uses_proxy]]=[[ปัจจุบัน Lightshot กำหนดค่าให้ใช้พร็อกซี่นี้: %proxy%]]
+[[screenshot_plugin.upl_fail.lightshot_uses_system_proxy]]=[[Lightshot ใช้ระบบการตั้งค่าพร็อกซี่ปัจจุบัน: %proxy%]]
+
+[[screenshot_app.language.name]]=[[ภาษาไทย]]
+[[screenshot_app.language.name_eng]]=[[Thai]]
+[[screenshot_app.language.code]]=[[TH]]

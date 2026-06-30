@@ -1,15 +1,15 @@
-﻿# Ejecutar como Administrador
-if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator"))
-{
-    Start-Process powershell.exe "-ExecutionPolicy Bypass -File `"$PSCommandPath`"" -Verb RunAs
-    exit
+﻿# Detectar ruta base del proyecto
+if ($PSScriptRoot) {
+    $BasePath = $PSScriptRoot
 }
-Add-Type -AssemblyName Microsoft.VisualBasic
-Add-Type -AssemblyName System.Windows.Forms
-Add-Type -AssemblyName System.Drawing
+else {
+    $BasePath = [System.IO.Path]::GetDirectoryName([System.Diagnostics.Process]::GetCurrentProcess().MainModule.FileName)
+}
 
-# Cargar modulos
-$ModulesPath = Join-Path $PSScriptRoot "src"
+$ModulesPath = Join-Path $BasePath "src"
+$ToolsPath   = Join-Path $BasePath "tools"
+$AssetsPath  = Join-Path $BasePath "assets"
+
 . "$ModulesPath\Energia.ps1"
 . "$ModulesPath\Sistema.ps1"
 . "$ModulesPath\Diagnostico.ps1"
@@ -19,9 +19,8 @@ $ModulesPath = Join-Path $PSScriptRoot "src"
 . "$ModulesPath\Disco.ps1"
 . "$ModulesPath\Programas.ps1"
 . "$ModulesPath\Office.ps1"
-."$ModulesPath\Herramientas.ps1"
-."$ModulesPath\Backup.ps1"
-."$ModulesPath\Energia.ps1"
+. "$ModulesPath\Herramientas.ps1"
+. "$ModulesPath\Backup.ps1"
 
 # Ventana principal
 $form = New-Object System.Windows.Forms.Form

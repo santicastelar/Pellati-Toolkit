@@ -1,0 +1,76 @@
+﻿[[screenshot_plugin.save]]=[[Desa]]
+[[screenshot_plugin.print]]=[[Imprimeix]]
+[[screenshot_plugin.fullscreen]]=[[Selecciona pantalla completa]]
+[[screenshot_plugin.clear]]=[[Neteja la selecció]]
+[[screenshot_plugin.editonline]]=[[Editeu una captura de pantalla en línia]]
+[[screenshot_plugin.upload]]=[[Puja a prntscr.com]]
+[[screenshot_plugin.close]]=[[Tanca]]
+
+[[screenshot_plugin.share_tineyesearch]]=[[Cerca imatges similars a Tineye]]
+[[screenshot_plugin.share_sendmail]]=[[Envia a través de correu electrònic]]
+[[screenshot_plugin.share_twitter]]=[[Comparteix al Twitter]]
+[[screenshot_plugin.share_facebook]]=[[Comparteix al Facebook]]
+[[screenshot_plugin.share_pinterest]]=[[Comparteix a Pinterest]]
+[[screenshot_plugin.share]]=[[Comparteix a les xarxes socials]]
+
+[[screenshot_plugin.incorrect_size]]=[[Mida incorrecta]]
+[[screenshot_plugin.error_capt]]=[[Error]]
+
+[[screenshot_plugin.open]]=[[Obre]]
+
+[[screenshot_app.take_screenshot]]=[[Feu una captura de pantalla]]
+[[screenshot_app.about]]=[[Quant a]]
+[[screenshot_app.help]]=[[Ajuda]]
+[[screenshot_app.exit]]=[[Surt]]
+[[screenshot_app.copyright]]=[[%company% Tots els drets reservats.]]
+
+[[screenshotplugin_name]]=[[Lightshot (l'eina de captura de pantalla)]]
+[[screenshotplugin_default_title]]=[[Feu una captura de pantalla]]
+
+[[screenshot_app.menu.sign_in]]=[[Inicia la sessió...]]
+[[screenshot_app.menu.sign_out]]=[[Tanca la sessió]]
+
+
+
+[[screenshot_plugin.edit_pencil]]=[[Llapis]]
+[[screenshot_plugin.edit_rect]]=[[Rectangle]]
+[[screenshot_plugin.edit_marker]]=[[Marcador]]
+[[screenshot_plugin.edit_text]]=[[Text]]
+[[screenshot_plugin.edit_color]]=[[Color]]
+[[screenshot_plugin.edit_undo]]=[[Desfés]]
+[[screenshot_plugin.edit_blur]]=[[Difuminat]]
+
+[[screenshot_plugin.screenshot_copied_to_clipboard]]=[[La captura de pantalla s'ha copiat al porta-retalls]]
+[[screenshot_plugin.screenshot_uploaded_link_copied]]=[[S'ha pujat la captura de pantalla. S'ha copiat l'enllaç al porta-retalls.]]
+
+[[screenshot_app.options]]=[[Opcions]]
+[[screenshot_app.options.proxy]]=[[Proxy]]
+[[screenshot_app.options.autocopy]]=[[Copia automàticament l'enllaç després de pujar-la]]
+[[screenshot_app.options.autoclose]]=[[Tanca la finestra de pujada automàticament]]
+[[screenshot_app.options.capturecursor]]=[[Captura el cursor en la captura de pantalla.]]
+[[screenshot_app.options.language]]=[[Idioma]]
+[[screenshot_app.options.httpsproxy]]=[[HTTP(S) proxy]]
+[[screenshot_app.options.proxyport]]=[[Port]]
+[[screenshot_app.options.formats]]=[[Formats]]
+[[screenshot_app.options.uploadformat]]=[[Puja utilitzant el format]]
+[[screenshot_app.options.jpegquality]]=[[Qualitat JPEG]]
+[[screenshot_app.options.keepselection]]=[[Mantenir la posició de l'àrea seleccionada]]
+[[screenshot_app.options.error_hotkeyinvalid]]=[[Una de les tecles de drecera no és vàlida. Per inhabilitar-la desmarca la casella de selecció corresponent.]]
+
+
+[[screenshot_app.options.optimize_never]]=[[Mai]]
+[[screenshot_app.options.optimize_always]]=[[Sempre]]
+
+[[screenshot_plugin.upload_error_capt]]=[[Error de pujada]]
+[[screenshot_plugin.announce_do_not_show]]=[[No mostris més aquest missatge]]
+
+[[screenshot_app.options.system_proxy_not_set]]=[[No configurat (connexió directa)]]
+[[screenshot_app.options.configure_system_proxy]]=[[Configura]]
+
+[[screenshot_plugin.upload_failed]]=[[Ha fallat la pujada.]]
+[[screenshot_plugin.upl_fail.lightshot_uses_proxy]]=[[Actualment el Lightshot està configurat per utilitzar aquest proxy: %proxy%]]
+[[screenshot_plugin.upl_fail.lightshot_uses_system_proxy]]=[[El Lightshot utilitza la configuració del proxy actual del sistema: %proxy%]]
+
+[[screenshot_app.language.name]]=[[Català]]
+[[screenshot_app.language.name_eng]]=[[Catalan]]
+[[screenshot_app.language.code]]=[[CA]]

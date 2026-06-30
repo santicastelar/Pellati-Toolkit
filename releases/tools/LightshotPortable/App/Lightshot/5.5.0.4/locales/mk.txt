@@ -1,0 +1,85 @@
+﻿[[screenshot_plugin.save]]=[[Зачувај]]
+[[screenshot_plugin.fullscreen]]=[[Избери целосен екран]]
+[[screenshot_plugin.editonline]]=[[Уреди скриншот онлајн]]
+[[screenshot_plugin.close]]=[[Затвори]]
+
+[[screenshot_plugin.share_googlesearch]]=[[Пребарувај слични слики на Гоогле]]
+[[screenshot_plugin.share_twitter]]=[[Сподели на Twitter]]
+[[screenshot_plugin.share_facebook]]=[[Сподели на Facebook]]
+[[screenshot_plugin.share_pinterest]]=[[Сподели на Pinterest]]
+[[screenshot_plugin.share]]=[[Споделете на социјалните мрежи]]
+
+[[screenshot_plugin.error_capt]]=[[Грешка]]
+
+[[screenshot_plugin.tooltip]]=[[Селектирај површина]]
+[[screenshot_plugin.open]]=[[Отвори]]
+[[screenshot_plugin.upload_failed_retry]]=[[Прикачувањето не беше успешно. Обидете се повторно?]]
+
+[[screenshot_app.take_screenshot]]=[[Направи скриншот]]
+[[screenshot_app.about]]=[[За нас]]
+[[screenshot_app.help]]=[[Помош]]
+[[screenshot_app.exit]]=[[Излез]]
+[[screenshot_app.copyright]]=[[%company% Сите права се задржани.]]
+
+[[screenshotplugin_name]]=[[Lightshot (алатка за скриншот)]]
+[[screenshotplugin_short_description]]=[[Едноставна и погодна алатка за скриншот. Селектирајте површина, уредете го вашиот скриншот и прикачете го на сервер.]]
+[[screenshotplugin_default_title]]=[[Направи скриншот]]
+
+[[screenshot_app.signin_dialog.caption]]=[[Најави се]]
+[[screenshot_app.menu.gallery]]=[[Моја галерија (%username%)]]
+[[screenshot_app.menu.sign_in]]=[[Најави се...]]
+[[screenshot_app.menu.sign_out]]=[[Одјави се]]
+[[screenshot_app.signed_in_as]]=[[Најавен како]]
+[[screenshot_app.signin_error_text]]=[[Lightshot: Настана грешка при најавата. Ве молиме обидете се повторно.]]
+
+[[screenshot_plugin.npapi_not_found]]=[[Грешка: Lightshot NPAPI приклучокот не е пронајден. Пробајте со освежување на вашиот пребарувач. Ако продолжите да ја добивате истата грешка после освежувањето, ве молиме контактирајте не на support@skillbrainscom.]]
+[[screenshot_plugin.go_to_mac_store]]=[[Се извинуваме за незгодата, но Lightshot екстензијата работи само на Windows компјутери. Ако сакате да користите Lightshot за Mac, во молиме преземете ја од Mac App продавницата. Одете во App продавницата сега?]]
+
+
+[[screenshot_plugin.edit_pencil]]=[[Пенкало]]
+[[screenshot_plugin.edit_line]]=[[Линија]]
+[[screenshot_plugin.edit_arrow]]=[[Стрелка]]
+[[screenshot_plugin.edit_rect]]=[[Правоаголник]]
+[[screenshot_plugin.edit_marker]]=[[Маркер]]
+[[screenshot_plugin.edit_text]]=[[Текст]]
+[[screenshot_plugin.edit_color]]=[[Боја]]
+[[screenshot_plugin.edit_blur]]=[[Заматено]]
+[[screenshot_plugin.edit_circle]]=[[Круг]]
+
+[[screenshot_plugin.screenshot_saved]]=[[Скриншотот е зачуван во %filename%. Кликнете тука за да ја отворите папката.]]
+[[screenshot_plugin.screenshot_uploaded_link_copied]]=[[Скриншотот е прикачен. Линкот е копиран на вашиот клипборд.]]
+
+[[screenshot_app.options]]=[[Опции]]
+[[screenshot_app.options.proxy]]=[[Овластување]]
+[[screenshot_app.options.autocopy]]=[[Автоматски копирај го линкот после прикачување]]
+[[screenshot_app.options.autoclose]]=[[Автоматски затвори го upload прозорецот]]
+[[screenshot_app.options.showbubbles]]=[[Покажи известувања за копирање и зачувување]]
+[[screenshot_app.options.language]]=[[Јазик]]
+[[screenshot_app.options.noproxy]]=[[Без овластување]]
+[[screenshot_app.options.systemproxy]]=[[Користи ја околината на системско овластување]]
+[[screenshot_app.options.manualproxy]]=[[Мануелно конфигурирање на овластување]]
+[[screenshot_app.options.httpsproxy]]=[[HTTP(S) овластување]]
+[[screenshot_app.options.proxyport]]=[[Порта]]
+[[screenshot_app.options.formats]]=[[Формати]]
+[[screenshot_app.options.uploadformat]]=[[Прикачи користејќи го форматот]]
+[[screenshot_app.options.jpegquality]]=[[JPEG квалитет]]
+[[screenshot_app.options.hotkeys]]=[[Кратенки на тастатура]]
+
+
+[[screenshot_app.options.optimize_screenshots]]=[[Оптимизирај скриншот]]
+[[screenshot_app.options.optimize_never]]=[[Никогаш]]
+[[screenshot_app.options.optimize_always]]=[[Секогаш]]
+
+[[screenshot_plugin.upload_error_capt]]=[[Грешка во прикачување]]
+[[screenshot_plugin.upload_error_detailed_info]]=[[Детално информирање]]
+[[screenshot_plugin.retry]]=[[Обидете се повторно]]
+
+[[screenshot_app.options.system_proxy_not_set]]=[[Не е сетирано (директна конекција)]]
+[[screenshot_app.options.configure_system_proxy]]=[[Конфигурирај]]
+
+[[screenshot_plugin.upload_failed]]=[[Прикачувањето не успеа.]]
+[[screenshot_plugin.upl_fail.lightshot_uses_proxy]]=[[Во моментов Lightshot е конфигуриран да го користи ова овластување: %proxy%]]
+
+[[screenshot_app.language.name]]=[[Mакедонски]]
+[[screenshot_app.language.name_eng]]=[[Macedonian]]
+[[screenshot_app.language.code]]=[[MK]]

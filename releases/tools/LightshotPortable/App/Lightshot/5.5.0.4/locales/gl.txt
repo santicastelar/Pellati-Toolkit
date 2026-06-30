@@ -1,0 +1,64 @@
+﻿[[screenshot_plugin.save]]=[[Gardar]]
+[[screenshot_plugin.copy]]=[[Copiar]]
+[[screenshot_plugin.print]]=[[Imprimir]]
+[[screenshot_plugin.fullscreen]]=[[Seleccionar pantalla completa]]
+[[screenshot_plugin.cancel]]=[[Cancelar]]
+[[screenshot_plugin.close]]=[[Pechar]]
+
+[[screenshot_plugin.share_googlesearch]]=[[Procurar imaxes semellantes no Google]]
+[[screenshot_plugin.share_sendmail]]=[[Enviar vía correo electrónico]]
+[[screenshot_plugin.share_twitter]]=[[Compartir no Twitter]]
+[[screenshot_plugin.share_facebook]]=[[Compartir no Facebook]]
+[[screenshot_plugin.share_pinterest]]=[[Compartir no Pinterest]]
+[[screenshot_plugin.share]]=[[Compartir nas redes sociais]]
+
+[[screenshot_plugin.error_capt]]=[[Erro]]
+
+[[screenshot_plugin.tooltip]]=[[Seleccionar área]]
+[[screenshot_plugin.open]]=[[Abrir]]
+[[screenshot_plugin.upload_failed_retry]]=[[Erro ao cargar. Volver tentar?]]
+
+[[screenshot_app.take_screenshot]]=[[Facer unha captura de pantalla]]
+[[screenshot_app.about]]=[[Acerca de]]
+[[screenshot_app.help]]=[[Axuda]]
+[[screenshot_app.exit]]=[[Saír]]
+[[screenshot_app.copyright]]=[[%company% Todos os dereitos reservados.]]
+
+[[screenshotplugin_default_title]]=[[Facer unha captura de pantalla]]
+
+[[screenshot_app.menu.gallery]]=[[A miña galería (%username%)]]
+[[screenshot_app.menu.sign_out]]=[[Saír]]
+[[screenshot_app.signin_error_text]]=[[Lightshot: produciuse un erro ao acceder. Vólveo tentar.]]
+
+
+
+[[screenshot_plugin.edit_rect]]=[[Rectángulo]]
+[[screenshot_plugin.edit_text]]=[[Texto]]
+[[screenshot_plugin.edit_color]]=[[Cor]]
+[[screenshot_plugin.edit_undo]]=[[Desfacer]]
+[[screenshot_plugin.edit_circle]]=[[Círculo]]
+
+[[screenshot_plugin.screenshot_copied_to_clipboard]]=[[A túa captura de pantalla copiouse no portapapeis]]
+
+[[screenshot_app.options]]=[[Opcións]]
+[[screenshot_app.options.proxy]]=[[Proxy]]
+[[screenshot_app.options.general]]=[[Xeral]]
+[[screenshot_app.options.language]]=[[Idioma]]
+[[screenshot_app.options.proxyport]]=[[Porto]]
+[[screenshot_app.options.formats]]=[[Formatos]]
+[[screenshot_app.options.jpegquality]]=[[Calidade JPEG]]
+
+
+[[screenshot_app.options.optimize_screenshots]]=[[Optimizar capturas (OptiPNG)]]
+[[screenshot_app.options.optimize_never]]=[[Nunca]]
+[[screenshot_app.options.optimize_always]]=[[Sempre]]
+
+[[screenshot_plugin.retry]]=[[Volver tentar]]
+
+[[screenshot_app.options.configure_system_proxy]]=[[Configurar]]
+
+[[screenshot_plugin.upload_failed]]=[[Erro ao subir.]]
+
+[[screenshot_app.language.name]]=[[Galego]]
+[[screenshot_app.language.name_eng]]=[[Galician]]
+[[screenshot_app.language.code]]=[[GL]]

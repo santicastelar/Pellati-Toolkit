@@ -1,0 +1,77 @@
+﻿[[screenshot_plugin.save]]=[[Сачувај]]
+[[screenshot_plugin.fullscreen]]=[[Изабери преко целог екрана]]
+[[screenshot_plugin.editonline]]=[[Измени слику онлајн]]
+[[screenshot_plugin.close]]=[[Затвори]]
+
+[[screenshot_plugin.share_twitter]]=[[Подели на твитеру]]
+[[screenshot_plugin.share_facebook]]=[[Подели на Фјесбуку]]
+[[screenshot_plugin.share_pinterest]]=[[Подели на Пинтересту]]
+[[screenshot_plugin.share]]=[[Подели на друштвеним мрежама]]
+
+[[screenshot_plugin.error_capt]]=[[Грешка]]
+
+[[screenshot_plugin.tooltip]]=[[Означи подручје]]
+[[screenshot_plugin.upload_failed_retry]]=[[Слање неуспешно. Пробај поново?]]
+
+[[screenshot_app.help]]=[[Помоћ]]
+[[screenshot_app.exit]]=[[Изађи]]
+[[screenshot_app.copyright]]=[[%company% Сва права задржана.]]
+
+[[screenshotplugin_name]]=[[Lightshot (алатка за снимање екрана)]]
+[[screenshotplugin_short_description]]=[[Једноставна и згодна алатка за сликање екрана. Изаберите област, уредите вашу слику екрана и поставите је на сервер.]]
+[[screenshotplugin_default_title]]=[[Сликај екран]]
+
+[[screenshot_app.menu.sign_in]]=[[Пријави се...]]
+[[screenshot_app.menu.sign_out]]=[[Одјави се]]
+[[screenshot_app.signed_in_as]]=[[Пријављен као]]
+[[screenshot_app.signin_error_caption]]=[[Грешка при пријављивању]]
+[[screenshot_app.signin_error_text]]=[[Lightshot: Дошло је до грешке при пријављивању. Молимо вас покушајте поново.]]
+
+[[screenshot_plugin.npapi_not_found]]=[[Грешка: Lightshot NPAPI прикључак није пронађен. Покушајте са освежавањем претраживача. Ако се грешка настави понављати, молимо вас контактирајте нас на support@skillbrains.com]]
+[[screenshot_plugin.go_to_mac_store]]=[[Извињавамо се због непријатности, али Lightshot екстензија ради само на Windowsрачунарима. Ако желите да користите Lightshot за Mac, молимо вас преузмите га са Mac App Store. Идите на App Store сада?]]
+
+[[screenshot_plugin.screenshot_error_reload_browser]]=[[Грешка: Lightshot не може да сними екран. Покушајте да поново учитате прегледач. Ако вам се и даље појављује ова грешка после поновног учитавања, молимо вас да контактирате support@skillbrains.com.\n\n Више податка о грешци: ]]
+[[screenshot_plugin.ctypes_error]]=[[Грешка: Фајерфокс CTypes није успео да покрене Lightshot. Покушајте да освежите ваш претраживач. Ако се грешка настави понављати, молимо вас контактирајте нас на support@skillbrains.com.\n\nДетаљи грешке: ]]
+
+[[screenshot_plugin.edit_pencil]]=[[Оловка]]
+[[screenshot_plugin.edit_arrow]]=[[Стрелица]]
+[[screenshot_plugin.edit_rect]]=[[Правоугаоник]]
+[[screenshot_plugin.edit_marker]]=[[Маркер]]
+[[screenshot_plugin.edit_text]]=[[Текст]]
+[[screenshot_plugin.edit_color]]=[[Боја]]
+[[screenshot_plugin.edit_blur]]=[[Замаглити]]
+[[screenshot_plugin.edit_circle]]=[[Круг]]
+
+[[screenshot_plugin.screenshot_uploaded_link_copied]]=[[Слика екрана је постављена. Линк је коиран на ваш clipboard.]]
+
+[[screenshot_app.options]]=[[Опције]]
+[[screenshot_app.options.autocopy]]=[[Аутоматски копирај линк после постављања]]
+[[screenshot_app.options.autoclose]]=[[Аутоматски затвори прозор за отпремање]]
+[[screenshot_app.options.showbubbles]]=[[Прикажи обавештења о копирању и сачувавању]]
+[[screenshot_app.options.language]]=[[Језик]]
+[[screenshot_app.options.systemproxy]]=[[Користи подешавања проксија]]
+[[screenshot_app.options.manualproxy]]=[[Ручно конфигурисање проксија]]
+[[screenshot_app.options.formats]]=[[Формати]]
+[[screenshot_app.options.uploadformat]]=[[Отпреми користећи овај формат]]
+[[screenshot_app.options.jpegquality]]=[[JPEG квалитет]]
+[[screenshot_app.options.hotkeys]]=[[Пречице]]
+[[screenshot_app.options.hotkeyuploadfullscreen]]=[[Аутоматски постави слике екрана на мрежу]]
+
+
+[[screenshot_app.options.optimize_never]]=[[Никада]]
+[[screenshot_app.options.optimize_always]]=[[Увек]]
+
+[[screenshot_plugin.upload_error_capt]]=[[Грешка при отпремању]]
+[[screenshot_plugin.upload_error_detailed_info]]=[[Детаљне информације]]
+[[screenshot_plugin.retry]]=[[Покушај поново]]
+
+[[screenshot_app.options.system_proxy_not_set]]=[[Није постављено (директна веза)]]
+[[screenshot_app.options.configure_system_proxy]]=[[Подеси]]
+
+[[screenshot_plugin.upload_failed]]=[[Отпремање није било успешно.]]
+[[screenshot_plugin.upl_fail.lightshot_uses_proxy]]=[[Lightshot је тренутно подешен да користи овај прокси:%proxy%]]
+[[screenshot_plugin.upl_fail.lightshot_uses_system_proxy]]=[[Lightshot користи тренутна подешавања proxy-ja: %proxy%]]
+
+[[screenshot_app.language.name]]=[[Српски]]
+[[screenshot_app.language.name_eng]]=[[Serbian]]
+[[screenshot_app.language.code]]=[[SR-CYRL]]

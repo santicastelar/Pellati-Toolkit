@@ -1,0 +1,49 @@
+﻿[[screenshot_plugin.save]]=[[Vista]]
+[[screenshot_plugin.copy]]=[[Afrita]]
+[[screenshot_plugin.print]]=[[Prenta]]
+[[screenshot_plugin.fullscreen]]=[[Velja fullan skjá]]
+[[screenshot_plugin.clear]]=[[Hreinsa]]
+[[screenshot_plugin.cancel]]=[[Hætta Við]]
+[[screenshot_plugin.editonline]]=[[Breyta Mynd]]
+[[screenshot_plugin.upload]]=[[Senda á prntscr.com]]
+[[screenshot_plugin.close]]=[[Loka]]
+
+[[screenshot_plugin.share_googlesearch]]=[[Leita að svipuðum myndum á Google]]
+[[screenshot_plugin.share_tineyesearch]]=[[Leita að svipuðum myndum á Tineye]]
+[[screenshot_plugin.share_sendmail]]=[[Senda í email]]
+[[screenshot_plugin.share_twitter]]=[[Deila á Twitter]]
+[[screenshot_plugin.share_facebook]]=[[Deila in Facebook]]
+
+[[screenshot_plugin.incorrect_size]]=[[Vitlaus Stærð]]
+[[screenshot_plugin.error_capt]]=[[Villa]]
+
+[[screenshot_plugin.tooltip]]=[[Velja svæði]]
+[[screenshot_plugin.open]]=[[Opna]]
+[[screenshot_plugin.uploading_window_capt]]=[[Sendi mynd]]
+[[screenshot_plugin.upload_failed_retry]]=[[Sending Mistóks. Reyna Aftur]]
+
+[[screenshot_app.take_screenshot]]=[[Taka Skjámynd]]
+[[screenshot_app.about]]=[[Upplýsingar]]
+[[screenshot_app.exit]]=[[Hætta]]
+[[screenshot_app.copyright]]=[[%company% Öll réttindi áskilin.]]
+[[screenshot_app.terms]]=[[Lightshot skilmálar þjónustu]]
+[[screenshot_app.tray_tooltip]]=[[Ýttu "%hotkey_main%" takkann á lyklaborðinu til að taka skjámynd]]
+
+[[screenshotplugin_name]]=[[Lightshot (screenshot tool)]]
+[[screenshotplugin_short_description]]=[[Easy and convenient screen capture tool. Allows you to make screenshot of any selected area, edit and upload it to server.]]
+[[screenshotplugin_default_title]]=[[Take Screenshot]]
+
+
+
+
+
+
+
+
+
+
+
+
+[[screenshot_app.language.name]]=[[Íslenska]]
+[[screenshot_app.language.name_eng]]=[[Icelandic]]
+[[screenshot_app.language.code]]=[[IS]]

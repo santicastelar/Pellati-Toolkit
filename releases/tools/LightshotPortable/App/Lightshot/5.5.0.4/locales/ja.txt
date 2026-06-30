@@ -1,0 +1,49 @@
+﻿[[screenshot_plugin.save]]=[[保存]]
+[[screenshot_plugin.copy]]=[[コピー]]
+[[screenshot_plugin.print]]=[[印刷]]
+[[screenshot_plugin.fullscreen]]=[[フルスクリーン]]
+[[screenshot_plugin.clear]]=[[クリアー]]
+[[screenshot_plugin.cancel]]=[[キャンセル]]
+[[screenshot_plugin.editonline]]=[[スクリーンショットを編集]]
+[[screenshot_plugin.upload]]=[["prntscr.com" へアップロード]]
+[[screenshot_plugin.close]]=[[閉じる]]
+
+[[screenshot_plugin.share_googlesearch]]=[["Google" で似た画像を探す]]
+[[screenshot_plugin.share_tineyesearch]]=[["Tineye" で似た画像を探す]]
+[[screenshot_plugin.share_sendmail]]=[[メールで送信]]
+[[screenshot_plugin.share_twitter]]=[["Twitter" で共有]]
+[[screenshot_plugin.share_facebook]]=[["Facebook" で共有]]
+
+[[screenshot_plugin.incorrect_size]]=[[サイズが異なる]]
+[[screenshot_plugin.error_capt]]=[[エラー]]
+
+[[screenshot_plugin.tooltip]]=[[範囲を選択]]
+[[screenshot_plugin.open]]=[[開く]]
+[[screenshot_plugin.uploading_window_capt]]=[[画像をアップロード]]
+[[screenshot_plugin.upload_failed_retry]]=[[アップロード失敗。もう一度行いますか？]]
+
+[[screenshot_app.take_screenshot]]=[[スクリーンショットを取る]]
+[[screenshot_app.about]]=[[スクリーンショットの使い方の説明]]
+[[screenshot_app.exit]]=[[終了]]
+[[screenshot_app.copyright]]=[[著作権は、'%company%' にあります。]]
+[[screenshot_app.terms]]=[["Lightshot" のサービス項目]]
+[[screenshot_app.tray_tooltip]]=[[キーボードの "%hotkey_main%" キーを押すとスクリーンショットが始まります。]]
+
+[[screenshotplugin_name]]=[[Lightshot (screenshot tool)]]
+[[screenshotplugin_short_description]]=[[Easy and convenient screen capture tool. Allows you to make screenshot of any selected area, edit and upload it to server.]]
+[[screenshotplugin_default_title]]=[[スクリーンショットを取る]]
+
+
+
+
+
+
+
+
+
+
+
+
+[[screenshot_app.language.name]]=[[日本語]]
+[[screenshot_app.language.name_eng]]=[[Japanese]]
+[[screenshot_app.language.code]]=[[JA]]
