@@ -446,6 +446,8 @@ function Mostrar-Sistema {
         $panelSistema.Controls.Add($btn)
     }
 
+    
+
 Crear-BotonSistema "Nombre del equipo" 40 {
     Abrir-NombreEquipo
 }
@@ -470,23 +472,19 @@ Crear-BotonSistema "Programas al inicio" 315 {
     Abrir-AppsInicio
 }
 
-Crear-BotonSistema "Programas instalados" 370 {
-    Abrir-ProgramasInstalados
-}
-
-Crear-BotonSistema "Administrador de dispositivos" 425 {
+Crear-BotonSistema "Administrador de dispositivos" 370 {
     Abrir-AdministradorDispositivos
 }
 
-Crear-BotonSistema "Administrador de tareas" 480 {
+Crear-BotonSistema "Administrador de tareas" 425 {
     Abrir-Taskmgr
 }
 
-Crear-BotonSistema "Servicios" 535 {
+Crear-BotonSistema "Servicios" 480 {
     Abrir-Servicios
 }
 
-Crear-BotonSistema "Opciones de carpeta" 590 {
+Crear-BotonSistema "Opciones de carpeta" 535 {
     Abrir-OpcionesCarpeta
 }
 

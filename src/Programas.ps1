@@ -247,45 +247,44 @@ function Mostrar-Programas {
 
         $formProgramas.Controls.Add($btn)
     }
-    Crear-BotonProgramas "Lightshot Portable" 40 {
-        Abrir-Lightshot
-    }
+Crear-BotonProgramas "7-Zip" 40 {
+    Abrir-7Zip
+}
 
-    Crear-BotonProgramas "Everything Portable" 95 {
-        Abrir-EverythingPortable
-    }
+Crear-BotonProgramas "WinRAR" 95 {
+    Abrir-WinRAR
+}
 
-    Crear-BotonProgramas "TeamViewer 12" 150 {
-        Abrir-TeamViewer12
-    }
+Crear-BotonProgramas "Google Chrome" 150 {
+    Instalar-Chrome
+}
 
-    Crear-BotonProgramas "AnyDesk" 205 {
-        Abrir-AnyDesk
-    }
+Crear-BotonProgramas "Firefox" 205 {
+    Instalar-Firefox
+}
 
-    Crear-BotonProgramas "Reset AnyDesk" 260 {
-        Reset-AnyDesk
-    }
+Crear-BotonProgramas "TeamViewer 12" 260 {
+    Abrir-TeamViewer12
+}
 
-    Crear-BotonProgramas "Lightshot" 315 {
-        Instalar-LightShot
-    }
+Crear-BotonProgramas "AnyDesk" 315 {
+    Abrir-AnyDesk
+}
 
-    Crear-BotonProgramas "Google Chrome" 370 {
-        Instalar-Chrome
-    }
+Crear-BotonProgramas "Reset AnyDesk" 370 {
+    Reset-AnyDesk
+}
 
-    Crear-BotonProgramas "Firefox" 425 {
-        Instalar-Firefox
-    }
+Crear-BotonProgramas "Lightshot" 425 {
+    Instalar-LightShot
+}
 
-    Crear-BotonProgramas "WinRAR" 480 {
-        Abrir-WinRAR
-    }
+Crear-BotonProgramas "Everything Portable" 480 {
+    Abrir-EverythingPortable
+}
 
-    Crear-BotonProgramas "7-Zip" 535 {
-        Abrir-7Zip
-    }
-
+Crear-BotonProgramas "Lightshot Portable" 535 {
+    Abrir-Lightshot
+}
     [void]$formProgramas.ShowDialog()
 }

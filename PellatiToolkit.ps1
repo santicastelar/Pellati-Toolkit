@@ -83,20 +83,20 @@ Crear-Boton "Energía" 190 {
     Mostrar-Energia
 }
 
-Crear-Boton "Carpetas de Windows" 235 {
-    Mostrar-CarpetasWindows
+Crear-Boton "Programas" 235 {
+    Mostrar-Programas
 }
 
-Crear-Boton "Herramientas" 280 {
-    Mostrar-Herramientas
-}
-
-Crear-Boton "Disco" 325 {
+Crear-Boton "Disco" 280 {
     Mostrar-Disco
 }
 
-Crear-Boton "Programas" 370 {
-    Mostrar-Programas
+Crear-Boton "Carpetas de Windows" 325 {
+    Mostrar-CarpetasWindows
+}
+
+Crear-Boton "Herramientas" 370 {
+    Mostrar-Herramientas
 }
 
 Crear-Boton "Office" 415 {
