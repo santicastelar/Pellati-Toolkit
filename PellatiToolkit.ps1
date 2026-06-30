@@ -1,4 +1,4 @@
-# Ejecutar como Administrador
+﻿# Ejecutar como Administrador
 if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator"))
 {
     Start-Process powershell.exe "-ExecutionPolicy Bypass -File `"$PSCommandPath`"" -Verb RunAs
@@ -20,6 +20,8 @@ $ModulesPath = Join-Path $PSScriptRoot "src"
 . "$ModulesPath\Programas.ps1"
 . "$ModulesPath\Office.ps1"
 ."$ModulesPath\Herramientas.ps1"
+."$ModulesPath\Backup.ps1"
+."$ModulesPath\Energia.ps1"
 
 # Ventana principal
 $form = New-Object System.Windows.Forms.Form
@@ -73,24 +75,34 @@ Crear-Boton "Sistema" 100 {
     Mostrar-Sistema
 }
 
-Crear-Boton "Disco" 145 {
-    Mostrar-Disco
+Crear-Boton "Backup" 145 {
+    Mostrar-Backup
 }
 
-Crear-Boton "Programas" 190 {
-    Mostrar-Programas
+Crear-Boton "Energía" 190 {
+    Mostrar-Energia
 }
 
 Crear-Boton "Carpetas de Windows" 235 {
     Mostrar-CarpetasWindows
 }
-Crear-Boton "Office" 280 {
-    Mostrar-Office
-}
-Crear-Boton "Herramientas" 325 {
+
+Crear-Boton "Herramientas" 280 {
     Mostrar-Herramientas
 }
-# Mostrar formulario
+
+Crear-Boton "Disco" 325 {
+    Mostrar-Disco
+}
+
+Crear-Boton "Programas" 370 {
+    Mostrar-Programas
+}
+
+Crear-Boton "Office" 415 {
+    Mostrar-Office
+}
+
 [void]$form.ShowDialog()
 
 
