@@ -22,6 +22,12 @@ $AssetsPath  = Join-Path $BasePath "assets"
 . "$ModulesPath\Herramientas.ps1"
 . "$ModulesPath\Backup.ps1"
 
+# Cargar librerías gráficas
+Add-Type -AssemblyName System.Windows.Forms
+Add-Type -AssemblyName System.Drawing
+Add-Type -AssemblyName Microsoft.VisualBasic
+
+[System.Windows.Forms.Application]::EnableVisualStyles()
 # Ventana principal
 $form = New-Object System.Windows.Forms.Form
 $form.Text = "Pellati-Toolkit"
