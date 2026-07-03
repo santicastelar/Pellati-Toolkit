@@ -2,50 +2,94 @@
 
 Toolkit personal de soporte técnico y post-instalación para Windows desarrollado en PowerShell y WinForms.
 
-## Funciones actuales
+## Capturas de pantalla
+
+### Menú principal
+
+![Menú principal](screenshots/main.png)
 
 ### Sistema
-- Iconos de escritorio
-- Acerca del equipo
-- Nombre del equipo
-- Backup usuario y contraseña
-- Backup unidades de red
-- Recursos compartidos (visualización y exportación)
-- Credenciales de Windows
-- Seguridad de Windows
-- Programas instalados
-- Programas al inicio
-- Administrador de tareas
-- Administrador de dispositivos
-- Servicios
-- Protección del sistema
-- Opciones de carpeta
-- Configuración de energía técnica
 
-### Disco
-- Administración de discos
-- BitLocker (consulta y desactivación)
-- CrystalDiskInfo (detección automática 32/64 bits)
+![Sistema](screenshots/sistema.png)
+
+### Backup
+
+![Backup](screenshots/backup.png)
+
+### Programas
+
+![Programas](screenshots/programas.png)
 
 ### Carpetas de Windows
-- Roaming
-- AppData Local
-- LocalLow
-- ProgramData
-- Startup Usuario
-- Startup Todos
-- Temp Usuario
-- Temp Windows
 
-## Objetivo
+![Carpetas de Windows](screenshots/folders.png)
 
-Centralizar en una única interfaz las tareas más utilizadas durante:
+---
 
-- Preparación de equipos
-- Migración de usuarios
-- Post-instalación de Windows
-- Diagnóstico y soporte técnico
+## Módulos actuales
 
-## Estado
+### Sistema
+- Nombre del equipo
+- Protección del sistema
+- Acerca del equipo
+- Iconos de escritorio
+- Seguridad de Windows
+- Programas al inicio
+- Administrador de dispositivos
+- Administrador de tareas
+- Servicios
+- Opciones de carpeta
 
-Proyecto en desarrollo y crecimiento continuo.
+### Backup
+- Backup del nombre del equipo
+- Backup de usuario y contraseña
+- Backup de configuración IP
+- Backup de unidades de red
+- Backup de recursos compartidos
+- Backup del listado de programas instalados
+- Acceso a Credenciales de Windows
+
+### Energía
+- Configuración automática para soporte técnico
+- Acceso al plan de energía de Windows
+
+### Programas
+- Instalación rápida de software de uso frecuente.
+
+### Disco
+- Herramientas de administración de discos.
+
+### Carpetas de Windows
+- Acceso rápido a carpetas del sistema.
+
+### Herramientas
+- Utilidades de soporte técnico.
+
+### Office
+- Herramientas relacionadas con Microsoft Office.
+
+---
+
+## Características
+
+- Aplicación portable.
+- Ejecutable compilado mediante PS2EXE.
+- Compatible con Windows 10 y Windows 11.
+- Requiere permisos de administrador.
+- Código modular organizado por funciones.
+
+---
+
+## Tecnologías utilizadas
+
+- PowerShell 5.1
+- Windows Forms
+- PS2EXE
+- Git
+- GitHub
+
+---
+
+## Licencia
+
+Proyecto personal de uso técnico y educativo.
