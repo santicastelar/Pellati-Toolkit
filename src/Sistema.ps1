@@ -83,7 +83,9 @@ function Exportar-UsuarioActual {
     $usuario = $env:USERNAME
     $dominio = $env:USERDOMAIN
     $usuarioCompleto = "$dominio\$usuario"
-    $ruta = "$env:USERPROFILE\Desktop\Backup_Usuario.txt"
+
+    $BackupPath = Obtener-CarpetaBackup
+    $ruta = Join-Path $BackupPath "Backup_Usuario.txt"
 
     if (Probar-CredencialLocal -Usuario $usuario -Dominio $dominio -Password "") {
 
@@ -101,7 +103,9 @@ function Exportar-UsuarioActual {
 
         [System.Windows.Forms.MessageBox]::Show(
             "Backup guardado en:`n$ruta`n`nLa cuenta no contiene contraseña.",
-            "Pellati-Toolkit"
+            "Pellati-Toolkit",
+            [System.Windows.Forms.MessageBoxButtons]::OK,
+            [System.Windows.Forms.MessageBoxIcon]::Information
         )
 
         return
@@ -159,9 +163,13 @@ function Exportar-UsuarioActual {
 
 function Exportar-NombreEquipo {
 
+    $BackupPath = Obtener-CarpetaBackup
+
     $respuesta = [System.Windows.Forms.MessageBox]::Show(
 @"
-En el escritorio se creará un archivo llamado "NombreEquipo.txt".
+Se exportará la información en la carpeta:
+
+$BackupPath
 
 El backup incluirá:
 
@@ -178,7 +186,7 @@ El backup incluirá:
 
     if ($respuesta -ne [System.Windows.Forms.DialogResult]::Yes) { return }
 
-    $ruta = "$env:USERPROFILE\Desktop\NombreEquipo.txt"
+    $ruta = Join-Path $BackupPath "NombreEquipo.txt"
 
     try {
         $cs = Get-CimInstance Win32_ComputerSystem
@@ -217,8 +225,10 @@ El backup incluirá:
 
 function Exportar-UnidadesMapeadas {
 
+    $BackupPath = Obtener-CarpetaBackup
+
     $respuesta = [System.Windows.Forms.MessageBox]::Show(
-        "Se exportarán las unidades de red mapeadas a un archivo TXT en el Escritorio.`n`n¿Desea continuar?",
+        "Se exportarán las unidades de red mapeadas en la carpeta:`n$BackupPath`n`n¿Desea continuar?",
         "Exportar unidades de red",
         [System.Windows.Forms.MessageBoxButtons]::YesNo,
         [System.Windows.Forms.MessageBoxIcon]::Question
@@ -226,7 +236,7 @@ function Exportar-UnidadesMapeadas {
 
     if ($respuesta -ne [System.Windows.Forms.DialogResult]::Yes) { return }
 
-    $ruta = "$env:USERPROFILE\Desktop\UnidadesMapeadas.txt"
+    $ruta = Join-Path $BackupPath "UnidadesMapeadas.txt"
     $contenido = @()
 
     $contenido += "UNIDADES MAPEADAS - NET USE"
@@ -304,8 +314,11 @@ DNS: $((Get-DnsClientServerAddress -InterfaceIndex $_.InterfaceIndex -AddressFam
     }
 
     function Exportar-ConfiguracionIP {
+
+        $BackupPath = Obtener-CarpetaBackup
+
         $respuesta = [System.Windows.Forms.MessageBox]::Show(
-            "Se exportará la configuración IP en un archivo TXT en el escritorio. ¿Desea continuar?",
+            "Se exportará la configuración IP en la carpeta:`n$BackupPath`n`n¿Desea continuar?",
             "Exportar configuración IP",
             [System.Windows.Forms.MessageBoxButtons]::YesNo,
             [System.Windows.Forms.MessageBoxIcon]::Question
@@ -313,7 +326,7 @@ DNS: $((Get-DnsClientServerAddress -InterfaceIndex $_.InterfaceIndex -AddressFam
 
         if ($respuesta -ne [System.Windows.Forms.DialogResult]::Yes) { return }
 
-        $ruta = "$env:USERPROFILE\Desktop\ConfiguracionIP.txt"
+        $ruta = Join-Path $BackupPath "ConfiguracionIP.txt"
         Obtener-ConfiguracionIP | Out-File $ruta -Encoding UTF8
 
         [System.Windows.Forms.MessageBox]::Show(
@@ -383,7 +396,18 @@ function Mostrar-RecursosCompartidos {
     $btnExportar.Location = New-Object System.Drawing.Point(340,320)
     $btnExportar.Add_Click({
         try {
-            $ruta = "$env:USERPROFILE\Desktop\RecursosCompartidos.txt"
+            $BackupPath = Obtener-CarpetaBackup
+
+            $respuesta = [System.Windows.Forms.MessageBox]::Show(
+                "Se exportarán los recursos compartidos en la carpeta:`n$BackupPath`n`n¿Desea continuar?",
+                "Exportar recursos compartidos",
+                [System.Windows.Forms.MessageBoxButtons]::YesNo,
+                [System.Windows.Forms.MessageBoxIcon]::Question
+            )
+
+            if ($respuesta -ne [System.Windows.Forms.DialogResult]::Yes) { return }
+
+            $ruta = Join-Path $BackupPath "RecursosCompartidos.txt"
 
             Get-SmbShare |
                 Select-Object Name, Path, Description |
@@ -446,47 +470,45 @@ function Mostrar-Sistema {
         $panelSistema.Controls.Add($btn)
     }
 
-    
+    Crear-BotonSistema "Nombre del equipo" 40 {
+        Abrir-NombreEquipo
+    }
 
-Crear-BotonSistema "Nombre del equipo" 40 {
-    Abrir-NombreEquipo
-}
+    Crear-BotonSistema "Protección del sistema" 95 {
+        Abrir-ProteccionSistema
+    }
 
-Crear-BotonSistema "Protección del sistema" 95 {
-    Abrir-ProteccionSistema
-}
+    Crear-BotonSistema "Acerca del equipo" 150 {
+        Abrir-AcercaEquipo
+    }
 
-Crear-BotonSistema "Acerca del equipo" 150 {
-    Abrir-AcercaEquipo
-}
+    Crear-BotonSistema "Iconos de escritorio" 205 {
+        Abrir-IconosEscritorio
+    }
 
-Crear-BotonSistema "Iconos de escritorio" 205 {
-    Abrir-IconosEscritorio
-}
+    Crear-BotonSistema "Seguridad de Windows" 260 {
+        Abrir-SeguridadWindows
+    }
 
-Crear-BotonSistema "Seguridad de Windows" 260 {
-    Abrir-SeguridadWindows
-}
+    Crear-BotonSistema "Programas al inicio" 315 {
+        Abrir-AppsInicio
+    }
 
-Crear-BotonSistema "Programas al inicio" 315 {
-    Abrir-AppsInicio
-}
+    Crear-BotonSistema "Administrador de dispositivos" 370 {
+        Abrir-AdministradorDispositivos
+    }
 
-Crear-BotonSistema "Administrador de dispositivos" 370 {
-    Abrir-AdministradorDispositivos
-}
+    Crear-BotonSistema "Administrador de tareas" 425 {
+        Abrir-Taskmgr
+    }
 
-Crear-BotonSistema "Administrador de tareas" 425 {
-    Abrir-Taskmgr
-}
+    Crear-BotonSistema "Servicios" 480 {
+        Abrir-Servicios
+    }
 
-Crear-BotonSistema "Servicios" 480 {
-    Abrir-Servicios
-}
-
-Crear-BotonSistema "Opciones de carpeta" 535 {
-    Abrir-OpcionesCarpeta
-}
+    Crear-BotonSistema "Opciones de carpeta" 535 {
+        Abrir-OpcionesCarpeta
+    }
 
     $lblEspacio = New-Object System.Windows.Forms.Label
     $lblEspacio.Location = New-Object System.Drawing.Point(0,1120)
