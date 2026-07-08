@@ -1,34 +1,58 @@
 # Pellati-Toolkit
 
-Toolkit personal de soporte técnico y post-instalación para Windows desarrollado en PowerShell y WinForms.
+Toolkit personal de soporte técnico y post-instalación para Windows desarrollado en PowerShell y Windows Forms.
 
-## Capturas de pantalla
+---
 
-### Menú principal
+# Instalación rápida
+
+Abrí **Windows PowerShell** como administrador y ejecutá:
+
+```powershell
+irm https://raw.githubusercontent.com/santicastelar/Pellati-Toolkit/main/install.ps1 | iex
+```
+
+El instalador descargará automáticamente la **última versión estable** desde GitHub Releases y ejecutará Pellati-Toolkit.
+
+---
+
+# Instalación manual
+
+1. Ir a la sección **Releases** del repositorio.
+2. Descargar la última versión disponible.
+3. Extraer el archivo ZIP.
+4. Ejecutar **Pellati-Toolkit.exe** como administrador.
+
+---
+
+# Capturas de pantalla
+
+## Menú principal
 
 ![Menú principal](screenshots/main.png)
 
-### Sistema
+## Sistema
 
 ![Sistema](screenshots/sistema.png)
 
-### Backup
+## Backup
 
 ![Backup](screenshots/backup.png)
 
-### Programas
+## Programas
 
 ![Programas](screenshots/programas.png)
 
-### Carpetas de Windows
+## Carpetas de Windows
 
 ![Carpetas de Windows](screenshots/folders.png)
 
 ---
 
-## Módulos actuales
+# Módulos
 
-### Sistema
+## Sistema
+
 - Nombre del equipo
 - Protección del sistema
 - Acerca del equipo
@@ -40,7 +64,8 @@ Toolkit personal de soporte técnico y post-instalación para Windows desarrolla
 - Servicios
 - Opciones de carpeta
 
-### Backup
+## Backup
+
 - Backup del nombre del equipo
 - Backup de usuario y contraseña
 - Backup de configuración IP
@@ -49,38 +74,46 @@ Toolkit personal de soporte técnico y post-instalación para Windows desarrolla
 - Backup del listado de programas instalados
 - Acceso a Credenciales de Windows
 
-### Energía
-- Configuración automática para soporte técnico
-- Acceso al plan de energía de Windows
+## Energía
 
-### Programas
+- Configuración automática para soporte técnico.
+- Acceso al plan de energía de Windows.
+
+## Programas
+
 - Instalación rápida de software de uso frecuente.
 
-### Disco
+## Disco
+
 - Herramientas de administración de discos.
 
-### Carpetas de Windows
+## Carpetas de Windows
+
 - Acceso rápido a carpetas del sistema.
 
-### Herramientas
+## Herramientas
+
 - Utilidades de soporte técnico.
 
-### Office
-- Herramientas relacionadas con Microsoft Office.
+## Office
+
+- Instalación de distintas versiones de Microsoft Office.
 
 ---
 
-## Características
+# Características
 
 - Aplicación portable.
-- Ejecutable compilado mediante PS2EXE.
+- Instalación automática mediante PowerShell.
+- Actualización sencilla mediante GitHub Releases.
+- Ejecutable compilado con PS2EXE.
 - Compatible con Windows 10 y Windows 11.
 - Requiere permisos de administrador.
-- Código modular organizado por funciones.
+- Arquitectura modular.
 
 ---
 
-## Tecnologías utilizadas
+# Tecnologías
 
 - PowerShell 5.1
 - Windows Forms
@@ -90,6 +123,19 @@ Toolkit personal de soporte técnico y post-instalación para Windows desarrolla
 
 ---
 
-## Licencia
+# Hoja de ruta
 
-Proyecto personal de uso técnico y educativo.
+Próximas funciones planificadas:
+
+- Impresoras.
+- Windows Update.
+- Limpieza de Windows.
+- Diagnóstico SMART.
+- Actualización automática desde GitHub.
+- Más herramientas de soporte técnico.
+
+---
+
+# Licencia
+
+Proyecto personal desarrollado con fines educativos y de soporte técnico.
