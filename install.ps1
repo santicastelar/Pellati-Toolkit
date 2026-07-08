@@ -2,12 +2,12 @@ $ErrorActionPreference = "Stop"
 
 $Repositorio = "santicastelar/Pellati-Toolkit"
 
-$InstallPath = "C:\Pellati-Toolkit"
+$InstallPath = "$env:USERPROFILE\Desktop\Pellati-Toolkit"
 $ZipPath = Join-Path $env:TEMP "Pellati-Toolkit.zip"
 
 Write-Host ""
 Write-Host "==========================================" -ForegroundColor Cyan
-Write-Host "     Instalando Pellati-Toolkit" -ForegroundColor Cyan
+Write-Host "     Descargandoo Pellati-Toolkit" -ForegroundColor Cyan
 Write-Host "==========================================" -ForegroundColor Cyan
 Write-Host ""
 
