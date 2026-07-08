@@ -1,5 +1,11 @@
 # Pellati-Toolkit
 
+![GitHub release](https://img.shields.io/github/v/release/santicastelar/Pellati-Toolkit?label=Latest%20Release&style=for-the-badge)
+![Windows](https://img.shields.io/badge/Windows-10%20%7C%2011-0078D6?style=for-the-badge&logo=windows)
+![PowerShell](https://img.shields.io/badge/PowerShell-5.1-5391FE?style=for-the-badge&logo=powershell)
+![License](https://img.shields.io/badge/License-Personal-blue?style=for-the-badge)
+![GitHub Repo stars](https://img.shields.io/github/stars/santicastelar/Pellati-Toolkit?style=for-the-badge)
+
 Toolkit personal de soporte técnico y post-instalación para Windows desarrollado en PowerShell y Windows Forms.
 
 ---
