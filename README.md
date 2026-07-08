@@ -1,7 +1,5 @@
 # Pellati-Toolkit
 
-# Pellati-Toolkit
-
 ![GitHub release](https://img.shields.io/github/v/release/santicastelar/Pellati-Toolkit?label=Latest%20Release&style=for-the-badge)
 ![GitHub Downloads](https://img.shields.io/github/downloads/santicastelar/Pellati-Toolkit/total?style=for-the-badge)
 ![Windows](https://img.shields.io/badge/Windows-10%20%7C%2011-0078D6?style=for-the-badge&logo=windows)
