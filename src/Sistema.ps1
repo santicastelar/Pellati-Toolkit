@@ -470,45 +470,45 @@ function Mostrar-Sistema {
         $panelSistema.Controls.Add($btn)
     }
 
-    Crear-BotonSistema "Nombre del equipo" 40 {
-        Abrir-NombreEquipo
-    }
+  Crear-BotonSistema "Nombre del equipo" 40 {
+    Abrir-NombreEquipo
+}
 
-    Crear-BotonSistema "Protección del sistema" 95 {
-        Abrir-ProteccionSistema
-    }
+Crear-BotonSistema "Acerca del equipo" 95 {
+    Abrir-AcercaEquipo
+}
 
-    Crear-BotonSistema "Acerca del equipo" 150 {
-        Abrir-AcercaEquipo
-    }
+Crear-BotonSistema "Protección del sistema" 150 {
+    Abrir-ProteccionSistema
+}
 
-    Crear-BotonSistema "Iconos de escritorio" 205 {
-        Abrir-IconosEscritorio
-    }
+Crear-BotonSistema "Seguridad de Windows" 205 {
+    Abrir-SeguridadWindows
+}
 
-    Crear-BotonSistema "Seguridad de Windows" 260 {
-        Abrir-SeguridadWindows
-    }
+Crear-BotonSistema "Administrador de dispositivos" 260 {
+    Abrir-AdministradorDispositivos
+}
 
-    Crear-BotonSistema "Programas al inicio" 315 {
-        Abrir-AppsInicio
-    }
+Crear-BotonSistema "Programas al inicio" 315 {
+    Abrir-AppsInicio
+}
 
-    Crear-BotonSistema "Administrador de dispositivos" 370 {
-        Abrir-AdministradorDispositivos
-    }
+Crear-BotonSistema "Administrador de tareas" 370 {
+    Abrir-Taskmgr
+}
 
-    Crear-BotonSistema "Administrador de tareas" 425 {
-        Abrir-Taskmgr
-    }
+Crear-BotonSistema "Servicios" 425 {
+    Abrir-Servicios
+}
 
-    Crear-BotonSistema "Servicios" 480 {
-        Abrir-Servicios
-    }
+Crear-BotonSistema "Iconos de escritorio" 480 {
+    Abrir-IconosEscritorio
+}
 
-    Crear-BotonSistema "Opciones de carpeta" 535 {
-        Abrir-OpcionesCarpeta
-    }
+Crear-BotonSistema "Opciones de carpeta" 535 {
+    Abrir-OpcionesCarpeta
+}
 
     $lblEspacio = New-Object System.Windows.Forms.Label
     $lblEspacio.Location = New-Object System.Drawing.Point(0,1120)
