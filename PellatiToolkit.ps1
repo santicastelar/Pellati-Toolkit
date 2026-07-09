@@ -21,6 +21,7 @@ $AssetsPath  = Join-Path $BasePath "assets"
 . "$ModulesPath\Office.ps1"
 . "$ModulesPath\Herramientas.ps1"
 . "$ModulesPath\Backup.ps1"
+. "$ModulesPath\Drivers.ps1"
 
 # Cargar librerías gráficas
 Add-Type -AssemblyName System.Windows.Forms
@@ -106,6 +107,10 @@ Crear-Boton "Herramientas" 370 {
 
 Crear-Boton "Office" 415 {
     Mostrar-Office
+}
+
+Crear-Boton "Drivers" 460 {
+    Mostrar-Drivers
 }
 
 [void]$form.ShowDialog()
