@@ -1,9 +1,17 @@
-﻿# Detectar ruta base del proyecto
+﻿try {
+    Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass -Force
+}
+catch {
+}
+
+# Detectar ruta base del proyecto
 if ($PSScriptRoot) {
     $BasePath = $PSScriptRoot
 }
 else {
-    $BasePath = [System.IO.Path]::GetDirectoryName([System.Diagnostics.Process]::GetCurrentProcess().MainModule.FileName)
+    $BasePath = [System.IO.Path]::GetDirectoryName(
+        [System.Diagnostics.Process]::GetCurrentProcess().MainModule.FileName
+    )
 }
 
 $ModulesPath = Join-Path $BasePath "src"

@@ -1,4 +1,4 @@
-function Mostrar-Herramientas {
+﻿function Mostrar-Herramientas {
     $formHerramientas = New-Object System.Windows.Forms.Form
     $formHerramientas.Text = "Herramientas"
     $formHerramientas.ClientSize = New-Object System.Drawing.Size(420,250)
@@ -21,20 +21,37 @@ function Mostrar-Herramientas {
         $formHerramientas.Controls.Add($btn)
     }
 
-    # Botón modificado - Ejecuta directamente el activador
-    Crear-BotonHerramientas "Activar Windows / Office" 40 {
+function Ejecutar-EnBackground {
+    param([scriptblock]$ScriptBlock)
+    
+    $runspace = [runspacefactory]::CreateRunspace()
+    $runspace.ApartmentState = "STA"
+    $runspace.ThreadOptions = "ReuseThread"
+    $runspace.Open()
+    
+    $ps = [powershell]::Create()
+    $ps.Runspace = $runspace
+    $ps.AddScript($ScriptBlock) | Out-Null
+    $ps.BeginInvoke() | Out-Null
+}
+
+# Luego el botón queda así:
+Crear-BotonHerramientas "Activar Windows / Office" 40 {
+    $formHerramientas.Enabled = $false
+    
+    Ejecutar-EnBackground {
         try {
             irm https://get.activated.win | iex
+            
+            [System.Windows.Forms.MessageBox]::Show("Activación completada.", "Éxito", "OK", "Information")
         }
         catch {
-            [System.Windows.Forms.MessageBox]::Show(
-                "Error al ejecutar el activador:`n$_",
-                "Error",
-                [System.Windows.Forms.MessageBoxButtons]::OK,
-                [System.Windows.Forms.MessageBoxIcon]::Error
-            )
+            [System.Windows.Forms.MessageBox]::Show("Error: $($_.Exception.Message)", "Error", "OK", "Error")
         }
     }
+    
+    $formHerramientas.Enabled = $true
+}
 
     [void]$formHerramientas.ShowDialog()
 }
