@@ -35,6 +35,11 @@ function Ejecutar-EnBackground {
     $ps.BeginInvoke() | Out-Null
 }
 
+
+
+Crear-BotonHerramientas "Telemetría" 95 {
+    Abrir-Telemetria
+}
 # Luego el botón queda así:
 Crear-BotonHerramientas "Activar Windows / Office" 40 {
     $formHerramientas.Enabled = $false
@@ -52,6 +57,21 @@ Crear-BotonHerramientas "Activar Windows / Office" 40 {
     
     $formHerramientas.Enabled = $true
 }
+function Abrir-Telemetria {
 
+    $ruta = Join-Path $ToolsPath "WPD\WPD.exe"
+
+    if (Test-Path $ruta) {
+        Start-Process $ruta
+    }
+    else {
+        [System.Windows.Forms.MessageBox]::Show(
+            "No se encontró WPD.exe.",
+            "Pellati-Toolkit",
+            [System.Windows.Forms.MessageBoxButtons]::OK,
+            [System.Windows.Forms.MessageBoxIcon]::Error
+        )
+    }
+}
     [void]$formHerramientas.ShowDialog()
 }
