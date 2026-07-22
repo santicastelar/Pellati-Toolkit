@@ -1,6 +1,5 @@
 ﻿function Abrir-NombreEquipo { Start-Process "sysdm.cpl" }
 function Abrir-AcercaEquipo { Start-Process "control.exe" -ArgumentList "system" }
-function Abrir-SeguridadWindows { Start-Process "windowsdefender://threat/" }
 function Abrir-IconosEscritorio { Start-Process "rundll32.exe" -ArgumentList "shell32.dll,Control_RunDLL desk.cpl,,0" }
 function Abrir-Taskmgr { taskmgr.exe }
 function Abrir-OpcionesCarpeta { Start-Process "control.exe" -ArgumentList "folders" }
@@ -470,49 +469,49 @@ function Mostrar-Sistema {
         $panelSistema.Controls.Add($btn)
     }
 
-  Crear-BotonSistema "Nombre del equipo" 40 {
-    Abrir-NombreEquipo
-}
+    Crear-BotonSistema "Nombre del equipo" 40 {
+        Abrir-NombreEquipo
+    }
 
-Crear-BotonSistema "Acerca del equipo" 95 {
-    Abrir-AcercaEquipo
-}
+    Crear-BotonSistema "Acerca del equipo" 95 {
+        Abrir-AcercaEquipo
+    }
 
-Crear-BotonSistema "Protección del sistema" 150 {
-    Abrir-ProteccionSistema
-}
+    Crear-BotonSistema "Programas al inicio" 150 {
+        Abrir-AppsInicio
+    }
 
-Crear-BotonSistema "Seguridad de Windows" 205 {
-    Abrir-SeguridadWindows
-}
+    Crear-BotonSistema "Protección del sistema" 205 {
+        Abrir-ProteccionSistema
+    }
 
-Crear-BotonSistema "Administrador de dispositivos" 260 {
-    Abrir-AdministradorDispositivos
-}
+    Crear-BotonSistema "Administrador de tareas" 260 {
+        Abrir-Taskmgr
+    }
 
-Crear-BotonSistema "Programas al inicio" 315 {
-    Abrir-AppsInicio
-}
+    Crear-BotonSistema "Servicios" 315 {
+        Abrir-Servicios
+    }
 
-Crear-BotonSistema "Administrador de tareas" 370 {
-    Abrir-Taskmgr
-}
+    Crear-BotonSistema "Administrador de dispositivos" 370 {
+        Abrir-AdministradorDispositivos
+    }
 
-Crear-BotonSistema "Servicios" 425 {
-    Abrir-Servicios
-}
+    Crear-BotonSistema "Iconos de escritorio" 425 {
+        Abrir-IconosEscritorio
+    }
 
-Crear-BotonSistema "Iconos de escritorio" 480 {
-    Abrir-IconosEscritorio
-}
+    Crear-BotonSistema "Opciones de carpeta" 480 {
+        Abrir-OpcionesCarpeta
+    }
 
-Crear-BotonSistema "Opciones de carpeta" 535 {
-    Abrir-OpcionesCarpeta
-}
+    Crear-BotonSistema "Carpetas de Windows" 535 {
+        Mostrar-CarpetasWindows
+    }
 
     $lblEspacio = New-Object System.Windows.Forms.Label
-    $lblEspacio.Location = New-Object System.Drawing.Point(0,1120)
-    $lblEspacio.Size = New-Object System.Drawing.Size(1,1)
+    $lblEspacio.Location = New-Object System.Drawing.Point(0,620)
+    $lblEspacio.Size = New-Object System.Drawing.Size(1,50)
     $panelSistema.Controls.Add($lblEspacio)
 
     [void]$formSistema.ShowDialog()

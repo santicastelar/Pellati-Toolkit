@@ -38,7 +38,7 @@ function Optimizar-Servicios {
 function Mostrar-Herramientas {
     $formHerramientas = New-Object System.Windows.Forms.Form
     $formHerramientas.Text = "Herramientas"
-    $formHerramientas.ClientSize = New-Object System.Drawing.Size(420,250)
+    $formHerramientas.ClientSize = New-Object System.Drawing.Size(420,350)
     $formHerramientas.StartPosition = "CenterScreen"
     $formHerramientas.BackColor = [System.Drawing.Color]::FromArgb(245,245,245)
 
@@ -94,6 +94,73 @@ function Mostrar-Herramientas {
     Crear-BotonHerramientas "Optimizar servicios" 150 {
         Optimizar-Servicios
     }
+        Crear-BotonHerramientas "Backup Outlook (mailpv)" 205 {
+        $formHerramientas.Enabled = $false
+        Crear-Backup-MPV
+        $formHerramientas.Enabled = $true
+    }
 
+function Crear-Backup-MPV {
+    $mensaje = "Se va a hacer una excepción en el antivirus Windows Defender.`n`n" +
+               "Si tiene otro antivirus (Avast, Kaspersky, ESET, etc.), desactívelo manualmente.`n`n" +
+               "⚠️ mailpv.exe se abrirá automáticamente.`n`n" +
+               "→ Para guardar las cuentas: presiona el botón de disquete o ve a File → Save"
+
+    $respuesta = [System.Windows.Forms.MessageBox]::Show(
+        $mensaje,
+        "Pellati-Toolkit - Backup Outlook",
+        [System.Windows.Forms.MessageBoxButtons]::OKCancel,
+        [System.Windows.Forms.MessageBoxIcon]::Warning
+    )
+   
+    if ($respuesta -ne "OK") { return }
+
+    try {
+        $nombreEquipo = $env:COMPUTERNAME
+        $rutaEscritorio = [Environment]::GetFolderPath("Desktop")
+        $carpetaBackup = Join-Path $rutaEscritorio "Pellati-Backup-$nombreEquipo"
+       
+        if (-not (Test-Path $carpetaBackup)) {
+            New-Item -Path $carpetaBackup -ItemType Directory -Force | Out-Null
+        }
+
+        $rutaMailPV = Join-Path $carpetaBackup "mailpv.exe"
+        $rutaZip = "C:\Users\RX580\Desktop\Proyectos\Pellati-Toolkit\tools\MPV\mpv.zip"
+       
+        if (-not (Test-Path $rutaZip)) {
+            [System.Windows.Forms.MessageBox]::Show("No se encontró mpv.zip", "Error", [System.Windows.Forms.MessageBoxButtons]::OK, [System.Windows.Forms.MessageBoxIcon]::Error)
+            return
+        }
+
+        Write-Host "Agregando excepciones..." -ForegroundColor Yellow
+       
+        Add-MpPreference -ExclusionPath $carpetaBackup -ErrorAction SilentlyContinue
+        Add-MpPreference -ExclusionPath $rutaMailPV -ErrorAction SilentlyContinue
+        Add-MpPreference -ExclusionProcess "mailpv.exe" -ErrorAction SilentlyContinue
+       
+        Start-Sleep -Seconds 2
+
+        Expand-Archive -Path $rutaZip -DestinationPath $carpetaBackup -Force
+
+        if (Test-Path $rutaMailPV) {
+            [System.Windows.Forms.MessageBox]::Show(
+                "✅ Programa abierto.`n`nGuarda las cuentas manualmente usando el botón de disquete.",
+                "Mail PassView Iniciado",
+                [System.Windows.Forms.MessageBoxButtons]::OK,
+                [System.Windows.Forms.MessageBoxIcon]::Information
+            )
+           
+            Start-Process "explorer.exe" $carpetaBackup
+            Start-Sleep -Seconds 1
+            Start-Process -FilePath $rutaMailPV
+        }
+        else {
+            [System.Windows.Forms.MessageBox]::Show("No se encontró mailpv.exe", "Error", [System.Windows.Forms.MessageBoxButtons]::OK, [System.Windows.Forms.MessageBoxIcon]::Warning)
+        }
+    }
+    catch {
+        [System.Windows.Forms.MessageBox]::Show("Error: $($_.Exception.Message)", "Error", [System.Windows.Forms.MessageBoxButtons]::OK, [System.Windows.Forms.MessageBoxIcon]::Error)
+    }
+}
     [void]$formHerramientas.ShowDialog()
 }

@@ -477,24 +477,24 @@ function Mostrar-Sistema {
         Abrir-AcercaEquipo
     }
 
-    Crear-BotonSistema "Protección del sistema" 150 {
-        Abrir-ProteccionSistema
-    }
-
-    Crear-BotonSistema "Administrador de dispositivos" 205 {
-        Abrir-AdministradorDispositivos
-    }
-
-    Crear-BotonSistema "Programas al inicio" 260 {
+    Crear-BotonSistema "Programas al inicio" 150 {
         Abrir-AppsInicio
     }
 
-    Crear-BotonSistema "Administrador de tareas" 315 {
+    Crear-BotonSistema "Protección del sistema" 205 {
+        Abrir-ProteccionSistema
+    }
+
+    Crear-BotonSistema "Administrador de tareas" 260 {
         Abrir-Taskmgr
     }
 
-    Crear-BotonSistema "Servicios" 370 {
+    Crear-BotonSistema "Servicios" 315 {
         Abrir-Servicios
+    }
+
+    Crear-BotonSistema "Administrador de dispositivos" 370 {
+        Abrir-AdministradorDispositivos
     }
 
     Crear-BotonSistema "Iconos de escritorio" 425 {

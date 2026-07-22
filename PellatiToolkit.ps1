@@ -37,6 +37,7 @@ $AssetsPath  = Join-Path $BasePath "assets"
 . "$ModulesPath\Office.ps1"
 . "$ModulesPath\Herramientas.ps1"
 . "$ModulesPath\Drivers.ps1"
+. "$ModulesPath\BackupChrome.ps1"
 . "$ModulesPath\Backup.ps1"
 . "$ModulesPath\Cuentas.ps1"
 . "$ModulesPath\Seguridad.ps1"
@@ -100,36 +101,36 @@ Crear-Boton "Backup" 145 {
     Mostrar-Backup
 }
 
-Crear-Boton "Energía" 190 {
-    Mostrar-Energia
-}
-
-Crear-Boton "Programas" 235 {
-    Mostrar-Programas
-}
-
-Crear-Boton "Disco" 280 {
-    Mostrar-Disco
-}
-
-Crear-Boton "Herramientas" 325 {
+Crear-Boton "Herramientas" 190 {
     Mostrar-Herramientas
 }
 
-Crear-Boton "Office" 370 {
-    Mostrar-Office
+Crear-Boton "Energía" 235 {
+    Mostrar-Energia
 }
 
-Crear-Boton "Drivers" 415 {
+Crear-Boton "Programas" 280 {
+    Mostrar-Programas
+}
+
+Crear-Boton "Disco" 325 {
+    Mostrar-Disco
+}
+
+Crear-Boton "Drivers" 370 {
     Mostrar-Drivers
 }
 
-Crear-Boton "Cuentas" 460 {
+Crear-Boton "Cuentas" 415 {
     Mostrar-Cuentas
 }
 
-Crear-Boton "Seguridad" 505 {
+Crear-Boton "Seguridad" 460 {
     Mostrar-Seguridad
+}
+
+Crear-Boton "Office" 505 {
+    Mostrar-Office
 }
 
 [void]$form.ShowDialog()
