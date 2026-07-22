@@ -63,6 +63,22 @@ Se aplicará la siguiente configuración:
             )
         }
     }
+function Configurar-Energia {
 
+    # Nunca suspender
+    powercfg /change standby-timeout-ac 0
+    powercfg /change standby-timeout-dc 0
+
+    # Nunca apagar la pantalla
+    powercfg /change monitor-timeout-ac 0
+    powercfg /change monitor-timeout-dc 0
+
+    # Nunca apagar los discos
+    powercfg /change disk-timeout-ac 0
+    powercfg /change disk-timeout-dc 0
+
+    # Deshabilitar hibernación
+    powercfg -hibernate off
+}
     [void]$formEnergia.ShowDialog()
 }

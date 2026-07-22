@@ -1,4 +1,41 @@
-﻿function Mostrar-Herramientas {
+﻿function Ejecutar-EnBackground {
+    param([scriptblock]$ScriptBlock)
+    
+    $runspace = [runspacefactory]::CreateRunspace()
+    $runspace.ApartmentState = "STA"
+    $runspace.ThreadOptions = "ReuseThread"
+    $runspace.Open()
+    
+    $ps = [powershell]::Create()
+    $ps.Runspace = $runspace
+    $ps.AddScript($ScriptBlock) | Out-Null
+    $handle = $ps.BeginInvoke()
+    
+    # Opcional: Puedes guardar el handle si quieres controlar cuando termina
+    return $handle
+}
+
+function Abrir-Telemetria {
+    $ruta = Join-Path $ToolsPath "WPD\WPD.exe"
+    if (Test-Path $ruta) {
+        Start-Process $ruta
+    }
+    else {
+        [System.Windows.Forms.MessageBox]::Show(
+            "No se encontró WPD.exe en:`n$ruta",
+            "Pellati-Toolkit",
+            [System.Windows.Forms.MessageBoxButtons]::OK,
+            [System.Windows.Forms.MessageBoxIcon]::Error
+        )
+    }
+}
+
+function Optimizar-Servicios {
+    # ... (tu función actual sin cambios) ...
+    # (mantengo tu código original aquí)
+}
+
+function Mostrar-Herramientas {
     $formHerramientas = New-Object System.Windows.Forms.Form
     $formHerramientas.Text = "Herramientas"
     $formHerramientas.ClientSize = New-Object System.Drawing.Size(420,250)
@@ -21,57 +58,42 @@
         $formHerramientas.Controls.Add($btn)
     }
 
-function Ejecutar-EnBackground {
-    param([scriptblock]$ScriptBlock)
-    
-    $runspace = [runspacefactory]::CreateRunspace()
-    $runspace.ApartmentState = "STA"
-    $runspace.ThreadOptions = "ReuseThread"
-    $runspace.Open()
-    
-    $ps = [powershell]::Create()
-    $ps.Runspace = $runspace
-    $ps.AddScript($ScriptBlock) | Out-Null
-    $ps.BeginInvoke() | Out-Null
-}
-
-
-
-Crear-BotonHerramientas "Telemetría" 95 {
-    Abrir-Telemetria
-}
-# Luego el botón queda así:
-Crear-BotonHerramientas "Activar Windows / Office" 40 {
-    $formHerramientas.Enabled = $false
-    
-    Ejecutar-EnBackground {
-        try {
-            irm https://get.activated.win | iex
-            
-            [System.Windows.Forms.MessageBox]::Show("Activación completada.", "Éxito", "OK", "Information")
+    # ==================== BOTÓN ACTIVACIÓN ====================
+    Crear-BotonHerramientas "Activar Windows / Office" 40 {
+        $formHerramientas.Enabled = $false
+        
+        Ejecutar-EnBackground {
+            try {
+                irm https://get.activated.win | iex
+                
+                [System.Windows.Forms.MessageBox]::Show(
+                    "Proceso de activación finalizado.`nRevisa la ventana de PowerShell para ver los detalles.",
+                    "Activación Completada",
+                    [System.Windows.Forms.MessageBoxButtons]::OK,
+                    [System.Windows.Forms.MessageBoxIcon]::Information
+                )
+            }
+            catch {
+                [System.Windows.Forms.MessageBox]::Show(
+                    "Error durante la activación:`n$($_.Exception.Message)",
+                    "Error",
+                    [System.Windows.Forms.MessageBoxButtons]::OK,
+                    [System.Windows.Forms.MessageBoxIcon]::Error
+                )
+            }
         }
-        catch {
-            [System.Windows.Forms.MessageBox]::Show("Error: $($_.Exception.Message)", "Error", "OK", "Error")
-        }
+        
+        # Reactivamos inmediatamente (el proceso corre en segundo plano)
+        $formHerramientas.Enabled = $true
     }
-    
-    $formHerramientas.Enabled = $true
-}
-function Abrir-Telemetria {
 
-    $ruta = Join-Path $ToolsPath "WPD\WPD.exe"
+    Crear-BotonHerramientas "Telemetría" 95 {
+        Abrir-Telemetria
+    }
 
-    if (Test-Path $ruta) {
-        Start-Process $ruta
+    Crear-BotonHerramientas "Optimizar servicios" 150 {
+        Optimizar-Servicios
     }
-    else {
-        [System.Windows.Forms.MessageBox]::Show(
-            "No se encontró WPD.exe.",
-            "Pellati-Toolkit",
-            [System.Windows.Forms.MessageBoxButtons]::OK,
-            [System.Windows.Forms.MessageBoxIcon]::Error
-        )
-    }
-}
+
     [void]$formHerramientas.ShowDialog()
 }

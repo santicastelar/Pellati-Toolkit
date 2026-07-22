@@ -122,6 +122,13 @@ function Mostrar-Backup {
     Crear-BotonBackup "Credenciales de Windows" 370 {
         Abrir-CredencialesWindows
     }
+    Crear-BotonBackup "Backup de drivers" 425 {
+    Exportar-Drivers
+}
+
+Crear-BotonBackup "Listado de drivers instalados" 480 {
+    Exportar-ListaDrivers
+}
 
     [void]$formBackup.ShowDialog()
 }

@@ -1,34 +1,24 @@
-﻿function Mostrar-Backup {
+﻿function Obtener-CarpetaBackup {
 
-    $formBackup = New-Object System.Windows.Forms.Form
-    $formBackup.Text = "Backup"
-    $formBackup.ClientSize = New-Object System.Drawing.Size(420,630)
-    $formBackup.StartPosition = "CenterScreen"
-    $formBackup.BackColor = [System.Drawing.Color]::FromArgb(245,245,245)
+    $nombrePC = $env:COMPUTERNAME
 
-    function Crear-BotonBackup {
-        param(
-            [string]$Texto,
-            [int]$Y,
-            [scriptblock]$Accion
-        )
+    $carpeta = Join-Path `
+        ([Environment]::GetFolderPath("Desktop")) `
+        "Pellati-Backup-$nombrePC"
 
-        $btn = New-Object System.Windows.Forms.Button
-        $btn.Text = $Texto
-        $btn.Size = New-Object System.Drawing.Size(300,35)
-
-        $x = [int](($formBackup.ClientSize.Width - $btn.Width) / 2)
-        $btn.Location = New-Object System.Drawing.Point($x,$Y)
-
-        $btn.Font = New-Object System.Drawing.Font("Segoe UI",9)
-        $btn.Add_Click($Accion)
-
-        $formBackup.Controls.Add($btn)
+    if (!(Test-Path $carpeta)) {
+        New-Item -ItemType Directory -Path $carpeta | Out-Null
     }
-    function Exportar-ProgramasInstalados {
+
+    return $carpeta
+}
+
+function Exportar-ProgramasInstalados {
+
+    $BackupPath = Obtener-CarpetaBackup
 
     $respuesta = [System.Windows.Forms.MessageBox]::Show(
-        "Se exportará el listado de programas instalados en un archivo TXT en el escritorio. ¿Desea continuar?",
+        "Se exportará el listado de programas instalados en la carpeta:`n$BackupPath`n`n¿Desea continuar?",
         "Backup programas instalados",
         [System.Windows.Forms.MessageBoxButtons]::YesNo,
         [System.Windows.Forms.MessageBoxIcon]::Question
@@ -38,7 +28,7 @@
         return
     }
 
-    $ruta = "$env:USERPROFILE\Desktop\ProgramasInstalados.txt"
+    $ruta = Join-Path $BackupPath "ProgramasInstalados.txt"
 
     try {
         $programas = @()
@@ -77,32 +67,67 @@
     }
 }
 
-Crear-BotonBackup "Backup nombre del equipo" 40 {
-    Exportar-NombreEquipo
+function Mostrar-Backup {
+
+    $formBackup = New-Object System.Windows.Forms.Form
+    $formBackup.Text = "Backup"
+    $formBackup.ClientSize = New-Object System.Drawing.Size(420,630)
+    $formBackup.StartPosition = "CenterScreen"
+    $formBackup.BackColor = [System.Drawing.Color]::FromArgb(245,245,245)
+
+    function Crear-BotonBackup {
+        param(
+            [string]$Texto,
+            [int]$Y,
+            [scriptblock]$Accion
+        )
+
+        $btn = New-Object System.Windows.Forms.Button
+        $btn.Text = $Texto
+        $btn.Size = New-Object System.Drawing.Size(300,35)
+
+        $x = [int](($formBackup.ClientSize.Width - $btn.Width) / 2)
+        $btn.Location = New-Object System.Drawing.Point($x,$Y)
+
+        $btn.Font = New-Object System.Drawing.Font("Segoe UI",9)
+        $btn.Add_Click($Accion)
+
+        $formBackup.Controls.Add($btn)
+    }
+
+    Crear-BotonBackup "Backup nombre del equipo" 40 {
+        Exportar-NombreEquipo
+    }
+
+    Crear-BotonBackup "Backup Usuario y Contraseña" 95 {
+        Exportar-UsuarioActual
+    }
+
+    Crear-BotonBackup "Backup configuración IP" 150 {
+        Mostrar-ConfiguracionIP
+    }
+
+    Crear-BotonBackup "Backup unidades de red" 205 {
+        Exportar-UnidadesMapeadas
+    }
+
+    Crear-BotonBackup "Backup recursos compartidos" 260 {
+        Mostrar-RecursosCompartidos
+    }
+
+    Crear-BotonBackup "Backup listado de programas instalados" 315 {
+        Exportar-ProgramasInstalados
+    }
+
+    Crear-BotonBackup "Credenciales de Windows" 370 {
+        Abrir-CredencialesWindows
+    }
+    Crear-BotonBackup "Backup de drivers" 425 {
+    Exportar-Drivers
 }
 
-Crear-BotonBackup "Backup Usuario y Contraseña" 95 {
-    Exportar-UsuarioActual
-}
-
-Crear-BotonBackup "Backup configuración IP" 150 {
-    Mostrar-ConfiguracionIP
-}
-
-Crear-BotonBackup "Backup unidades de red" 205 {
-    Exportar-UnidadesMapeadas
-}
-
-Crear-BotonBackup "Backup recursos compartidos" 260 {
-    Mostrar-RecursosCompartidos
-}
-
-Crear-BotonBackup "Backup listado de programas instalados" 315 {
-    Exportar-ProgramasInstalados
-}
-
-Crear-BotonBackup "Credenciales de Windows" 370 {
-    Abrir-CredencialesWindows
+Crear-BotonBackup "Listado de drivers instalados" 480 {
+    Exportar-ListaDrivers
 }
 
     [void]$formBackup.ShowDialog()

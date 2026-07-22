@@ -131,13 +131,5 @@ function Mostrar-Drivers {
         Abrir-AdministradorDispositivosDrivers
     }
 
-    Crear-BotonDrivers "Backup de drivers" 150 {
-        Exportar-Drivers
-    }
-
-    Crear-BotonDrivers "Listado de drivers instalados" 205 {
-        Exportar-ListaDrivers
-    }
-
     [void]$formDrivers.ShowDialog()
 }

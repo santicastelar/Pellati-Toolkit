@@ -4,6 +4,13 @@
 catch {
 }
 
+# Cargar librerías gráficas
+Add-Type -AssemblyName System.Windows.Forms
+Add-Type -AssemblyName System.Drawing
+Add-Type -AssemblyName Microsoft.VisualBasic
+
+[System.Windows.Forms.Application]::EnableVisualStyles()
+
 # Detectar ruta base del proyecto
 if ($PSScriptRoot) {
     $BasePath = $PSScriptRoot
@@ -18,6 +25,7 @@ $ModulesPath = Join-Path $BasePath "src"
 $ToolsPath   = Join-Path $BasePath "tools"
 $AssetsPath  = Join-Path $BasePath "assets"
 
+# Cargar módulos
 . "$ModulesPath\Energia.ps1"
 . "$ModulesPath\Sistema.ps1"
 . "$ModulesPath\Diagnostico.ps1"
@@ -28,41 +36,41 @@ $AssetsPath  = Join-Path $BasePath "assets"
 . "$ModulesPath\Programas.ps1"
 . "$ModulesPath\Office.ps1"
 . "$ModulesPath\Herramientas.ps1"
-. "$ModulesPath\Backup.ps1"
 . "$ModulesPath\Drivers.ps1"
+. "$ModulesPath\Backup.ps1"
+. "$ModulesPath\Cuentas.ps1"
+. "$ModulesPath\Seguridad.ps1"
 
-# Cargar librerías gráficas
-Add-Type -AssemblyName System.Windows.Forms
-Add-Type -AssemblyName System.Drawing
-Add-Type -AssemblyName Microsoft.VisualBasic
-
-[System.Windows.Forms.Application]::EnableVisualStyles()
 # Ventana principal
 $form = New-Object System.Windows.Forms.Form
 $form.Text = "Pellati-Toolkit"
-$form.ClientSize = New-Object System.Drawing.Size(460, 680)
+$form.ClientSize = New-Object System.Drawing.Size(460,680)
 $form.StartPosition = "CenterScreen"
 $form.FormBorderStyle = "FixedDialog"
 $form.MaximizeBox = $false
 $form.BackColor = [System.Drawing.Color]::FromArgb(245,245,245)
 
-# Titulo
+# Título
 $title = New-Object System.Windows.Forms.Label
 $title.Text = "Pellati-Toolkit"
-$title.Font = New-Object System.Drawing.Font("Segoe UI", 18, [System.Drawing.FontStyle]::Bold)
+$title.Font = New-Object System.Drawing.Font(
+    "Segoe UI",
+    18,
+    [System.Drawing.FontStyle]::Bold
+)
 $title.AutoSize = $true
 $title.Location = New-Object System.Drawing.Point(95,20)
 $form.Controls.Add($title)
 
-# Subtitulo
+# Subtítulo
 $subtitle = New-Object System.Windows.Forms.Label
-$subtitle.Text = "Herramientas de soporte y post-instalacion"
-$subtitle.Font = New-Object System.Drawing.Font("Segoe UI", 9)
+$subtitle.Text = "Herramientas de soporte y post-instalación"
+$subtitle.Font = New-Object System.Drawing.Font("Segoe UI",9)
 $subtitle.AutoSize = $true
 $subtitle.Location = New-Object System.Drawing.Point(65,60)
 $form.Controls.Add($subtitle)
 
-# Funcion para crear botones
+# Función para crear botones
 function Crear-Boton {
     param(
         [string]$Texto,
@@ -75,7 +83,7 @@ function Crear-Boton {
     $btn.Size = New-Object System.Drawing.Size(340,36)
 
     $x = [int](($form.ClientSize.Width - $btn.Width) / 2)
-    $btn.Location = New-Object System.Drawing.Point($x, $Y)
+    $btn.Location = New-Object System.Drawing.Point($x,$Y)
 
     $btn.Font = New-Object System.Drawing.Font("Segoe UI",10)
     $btn.Add_Click($Accion)
@@ -83,8 +91,7 @@ function Crear-Boton {
     $form.Controls.Add($btn)
 }
 
-# Botones
-
+# Botones principales
 Crear-Boton "Sistema" 100 {
     Mostrar-Sistema
 }
@@ -105,22 +112,24 @@ Crear-Boton "Disco" 280 {
     Mostrar-Disco
 }
 
-Crear-Boton "Carpetas de Windows" 325 {
-    Mostrar-CarpetasWindows
-}
-
-Crear-Boton "Herramientas" 370 {
+Crear-Boton "Herramientas" 325 {
     Mostrar-Herramientas
 }
 
-Crear-Boton "Office" 415 {
+Crear-Boton "Office" 370 {
     Mostrar-Office
 }
 
-Crear-Boton "Drivers" 460 {
+Crear-Boton "Drivers" 415 {
     Mostrar-Drivers
 }
 
+Crear-Boton "Cuentas" 460 {
+    Mostrar-Cuentas
+}
+
+Crear-Boton "Seguridad" 505 {
+    Mostrar-Seguridad
+}
+
 [void]$form.ShowDialog()
-
-
