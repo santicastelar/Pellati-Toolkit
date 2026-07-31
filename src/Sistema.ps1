@@ -439,7 +439,7 @@ function Mostrar-Sistema {
 
     $formSistema = New-Object System.Windows.Forms.Form
     $formSistema.Text = "Sistema"
-    $formSistema.ClientSize = New-Object System.Drawing.Size(420,750)
+    $formSistema.ClientSize = New-Object System.Drawing.Size(420,800)
     $formSistema.StartPosition = "CenterScreen"
     $formSistema.BackColor = [System.Drawing.Color]::FromArgb(245,245,245)
 
@@ -596,6 +596,143 @@ $estadoActual
         )
     }
 }
+function Abrir-AplicacionesPredeterminadas {
+
+    try {
+        Start-Process "ms-settings:defaultapps"
+    }
+    catch {
+        [System.Windows.Forms.MessageBox]::Show(
+            "No se pudo abrir Aplicaciones predeterminadas.`n`n$($_.Exception.Message)",
+            "Pellati-Toolkit",
+            [System.Windows.Forms.MessageBoxButtons]::OK,
+            [System.Windows.Forms.MessageBoxIcon]::Error
+        )
+    }
+}
+function Asociar-PdfYArchivosWeb {
+
+    $extensiones = @(
+        @{
+            Extension   = ".pdf"
+            Descripcion = "documentos PDF"
+        },
+        @{
+            Extension   = ".html"
+            Descripcion = "archivos HTML"
+        },
+        @{
+            Extension   = ".htm"
+            Descripcion = "archivos HTM"
+        },
+        @{
+            Extension   = ".mhtml"
+            Descripcion = "archivos MHTML"
+        }
+    )
+
+    $respuesta = [System.Windows.Forms.MessageBox]::Show(
+@"
+Se crearán archivos ficticios temporales para configurar las siguientes asociaciones:
+
+- PDF
+- HTML
+- HTM
+- MHTML
+
+Para cada archivo:
+
+1. Se abrirán sus Propiedades.
+2. En "Se abre con", presione "Cambiar".
+3. Seleccione Acrobat Reader, Chrome u otro programa.
+4. Presione Aplicar y Aceptar.
+5. Vuelva a Pellati-Toolkit para continuar con la siguiente extensión.
+
+¿Desea continuar?
+"@,
+        "Asociar PDF y archivos web",
+        [System.Windows.Forms.MessageBoxButtons]::YesNo,
+        [System.Windows.Forms.MessageBoxIcon]::Question
+    )
+
+    if ($respuesta -ne [System.Windows.Forms.DialogResult]::Yes) {
+        return
+    }
+
+    foreach ($item in $extensiones) {
+
+        $extension = $item.Extension
+        $descripcion = $item.Descripcion
+        $archivoTemporal = $null
+
+        try {
+            $nombreTemporal = "Pellati_Asociacion_$([Guid]::NewGuid().ToString('N'))$extension"
+            $archivoTemporal = Join-Path $env:TEMP $nombreTemporal
+
+            New-Item `
+                -Path $archivoTemporal `
+                -ItemType File `
+                -Force `
+                -ErrorAction Stop |
+                Out-Null
+
+            $shell = New-Object -ComObject Shell.Application
+            $carpeta = $shell.Namespace((Split-Path $archivoTemporal -Parent))
+            $archivo = $carpeta.ParseName((Split-Path $archivoTemporal -Leaf))
+
+            if (-not $archivo) {
+                throw "No se pudo localizar el archivo temporal $extension."
+            }
+
+            $archivo.InvokeVerb("properties")
+
+            [System.Windows.Forms.MessageBox]::Show(
+@"
+Se abrieron las propiedades para:
+
+$extension - $descripcion
+
+En "Se abre con":
+
+1. Presione Cambiar.
+2. Seleccione el programa deseado.
+3. Presione Aplicar y Aceptar.
+
+Cuando termine, presione Aceptar en este mensaje para continuar con la siguiente extensión.
+"@,
+                "Asociar $extension",
+                [System.Windows.Forms.MessageBoxButtons]::OK,
+                [System.Windows.Forms.MessageBoxIcon]::Information
+            )
+        }
+        catch {
+            [System.Windows.Forms.MessageBox]::Show(
+                "No se pudo configurar $extension.`n`n$($_.Exception.Message)",
+                "Pellati-Toolkit",
+                [System.Windows.Forms.MessageBoxButtons]::OK,
+                [System.Windows.Forms.MessageBoxIcon]::Error
+            )
+        }
+        finally {
+            if (
+                $archivoTemporal -and
+                (Test-Path -LiteralPath $archivoTemporal)
+            ) {
+                Remove-Item `
+                    -LiteralPath $archivoTemporal `
+                    -Force `
+                    -ErrorAction SilentlyContinue
+            }
+        }
+    }
+
+    [System.Windows.Forms.MessageBox]::Show(
+        "El proceso de asociación de PDF y archivos web finalizó.",
+        "Pellati-Toolkit",
+        [System.Windows.Forms.MessageBoxButtons]::OK,
+        [System.Windows.Forms.MessageBoxIcon]::Information
+    )
+}
     function Crear-BotonSistema {
         param(
             [string]$Texto,
@@ -617,52 +754,61 @@ $estadoActual
     }
 
     Crear-BotonSistema "Nombre del equipo" 40 {
-        Abrir-NombreEquipo
-    }
+    Abrir-NombreEquipo
+}
 
-    Crear-BotonSistema "Acerca del equipo" 95 {
-        Abrir-AcercaEquipo
-    }
+Crear-BotonSistema "Acerca del equipo" 95 {
+    Abrir-AcercaEquipo
+}
 
-    Crear-BotonSistema "Programas al inicio" 150 {
-        Abrir-AppsInicio
-    }
+Crear-BotonSistema "Programas al inicio" 150 {
+    Abrir-AppsInicio
+}
 
-    Crear-BotonSistema "Protección del sistema" 205 {
-        Abrir-ProteccionSistema
-    }
+Crear-BotonSistema "Protección del sistema" 205 {
+    Abrir-ProteccionSistema
+}
 
-    Crear-BotonSistema "Administrador de tareas" 260 {
-        Abrir-Taskmgr
-    }
+Crear-BotonSistema "Administrador de tareas" 260 {
+    Abrir-Taskmgr
+}
 
-    Crear-BotonSistema "Servicios" 315 {
-        Abrir-Servicios
-    }
+Crear-BotonSistema "Servicios" 315 {
+    Abrir-Servicios
+}
 
-    Crear-BotonSistema "Administrador de dispositivos" 370 {
-        Abrir-AdministradorDispositivos
-    }
+Crear-BotonSistema "Administrador de dispositivos" 370 {
+    Abrir-AdministradorDispositivos
+}
 
-    Crear-BotonSistema "Iconos de escritorio" 425 {
-        Abrir-IconosEscritorio
-    }
+Crear-BotonSistema "Iconos de escritorio" 425 {
+    Abrir-IconosEscritorio
+}
 
-    Crear-BotonSistema "Opciones de carpeta" 480 {
-        Abrir-OpcionesCarpeta
-    }
+Crear-BotonSistema "Opciones de carpeta" 480 {
+    Abrir-OpcionesCarpeta
+}
+
+Crear-BotonSistema "Carpetas de Windows" 535 {
+    Mostrar-CarpetasWindows
+}
+
 Crear-BotonSistema "Agrupar / desagrupar barra de tareas" 590 {
     Alternar-AgrupacionBarraTareas
 }
-    Crear-BotonSistema "Carpetas de Windows" 535 {
-        Mostrar-CarpetasWindows
-    }
+
+Crear-BotonSistema "Aplicaciones predeterminadas" 645 {
+    Abrir-AplicacionesPredeterminadas
+}
+
+Crear-BotonSistema "Asociar PDF y archivos web" 700 {
+    Asociar-PdfYArchivosWeb
+}
     
 
-    $lblEspacio = New-Object System.Windows.Forms.Label
-    $lblEspacio.Location = New-Object System.Drawing.Point(0,620)
-    $lblEspacio.Size = New-Object System.Drawing.Size(1,50)
-    $panelSistema.Controls.Add($lblEspacio)
-
+$lblEspacio = New-Object System.Windows.Forms.Label
+$lblEspacio.Location = New-Object System.Drawing.Point(0,780)
+$lblEspacio.Size = New-Object System.Drawing.Size(1,50)
+$panelSistema.Controls.Add($lblEspacio)
     [void]$formSistema.ShowDialog()
 }
