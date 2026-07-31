@@ -227,8 +227,26 @@ function Mostrar-Programas {
     $formProgramas.ClientSize = New-Object System.Drawing.Size(420,700)
     $formProgramas.StartPosition = "CenterScreen"
     $formProgramas.BackColor = [System.Drawing.Color]::FromArgb(245,245,245)
+function Abrir-AcrobatReader {
 
-    function Crear-BotonProgramas {
+    $ruta = Join-Path $ToolsPath "Acrobat\Reader_es_install.exe"
+
+    if (Test-Path $ruta) {
+
+        Start-Process $ruta
+
+    }
+    else {
+
+        [System.Windows.Forms.MessageBox]::Show(
+            "No se encontró Reader_es_install.exe.",
+            "Pellati-Toolkit",
+            [System.Windows.Forms.MessageBoxButtons]::OK,
+            [System.Windows.Forms.MessageBoxIcon]::Error
+        )
+
+    }
+}    function Crear-BotonProgramas {
         param(
             [string]$Texto,
             [int]$Y,
@@ -285,6 +303,9 @@ Crear-BotonProgramas "Everything Portable" 480 {
 
 Crear-BotonProgramas "Lightshot Portable" 535 {
     Abrir-Lightshot
+}
+Crear-BotonProgramas "Adobe Acrobat Reader" 590 {
+    Abrir-AcrobatReader
 }
     [void]$formProgramas.ShowDialog()
 }

@@ -50,7 +50,7 @@ El instalador descargará automáticamente la **última versión estable** desde
 
 ![Programas](screenshots/programas.png)
 
-## Carpetas de Windows
+## Versiones de Office
 
 ![Carpetas de Windows](screenshots/folders.png)
 

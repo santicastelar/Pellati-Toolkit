@@ -448,7 +448,154 @@ function Mostrar-Sistema {
     $panelSistema.AutoScroll = $true
     $panelSistema.BackColor = [System.Drawing.Color]::FromArgb(245,245,245)
     $formSistema.Controls.Add($panelSistema)
+function Alternar-AgrupacionBarraTareas {
 
+    $rutaRegistro = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced"
+    $nombreValor = "TaskbarGlomLevel"
+
+    try {
+        # Detectar sistema operativo
+        $sistema = Get-CimInstance Win32_OperatingSystem -ErrorAction Stop
+        $nombreWindows = $sistema.Caption
+        $buildWindows = [int]$sistema.BuildNumber
+
+        $esWindows10 = $nombreWindows -like "*Windows 10*"
+        $esWindows11 = $nombreWindows -like "*Windows 11*"
+
+        if (-not $esWindows10 -and -not $esWindows11) {
+            [System.Windows.Forms.MessageBox]::Show(
+                "Esta función está diseñada para Windows 10 y Windows 11.",
+                "Pellati-Toolkit",
+                [System.Windows.Forms.MessageBoxButtons]::OK,
+                [System.Windows.Forms.MessageBoxIcon]::Warning
+            )
+
+            return
+        }
+
+        # Crear la clave si no existe
+        if (-not (Test-Path $rutaRegistro)) {
+            New-Item `
+                -Path $rutaRegistro `
+                -Force `
+                -ErrorAction Stop |
+                Out-Null
+        }
+
+        # Obtener valor actual.
+        # Si no existe, Windows usa el comportamiento predeterminado: agrupar.
+        $propiedad = Get-ItemProperty `
+            -Path $rutaRegistro `
+            -Name $nombreValor `
+            -ErrorAction SilentlyContinue
+
+        if ($null -eq $propiedad) {
+            $valorActual = 0
+        }
+        else {
+            $valorActual = [int]$propiedad.$nombreValor
+        }
+
+        $estaDesagrupado = ($valorActual -eq 2)
+
+        if ($estaDesagrupado) {
+
+            $mensaje = @"
+Sistema detectado:
+
+$nombreWindows
+Build: $buildWindows
+
+Estado actual:
+
+Los botones de la barra de tareas están DESAGRUPADOS.
+
+¿Desea volver a agruparlos?
+"@
+
+            $titulo = "Agrupar botones de la barra de tareas"
+            $nuevoValor = 0
+            $mensajeFinal = "Los botones de la barra de tareas fueron agrupados correctamente."
+        }
+        else {
+
+            $estadoActual = switch ($valorActual) {
+                1 { "Se agrupan cuando la barra de tareas está llena." }
+                default { "Se agrupan siempre." }
+            }
+
+            $mensaje = @"
+Sistema detectado:
+
+$nombreWindows
+Build: $buildWindows
+
+Estado actual:
+
+$estadoActual
+
+¿Desea desagrupar los botones de la barra de tareas y mostrar sus etiquetas?
+"@
+
+            $titulo = "Desagrupar botones de la barra de tareas"
+            $nuevoValor = 2
+            $mensajeFinal = "Los botones de la barra de tareas fueron desagrupados correctamente."
+        }
+
+        $respuesta = [System.Windows.Forms.MessageBox]::Show(
+            $mensaje,
+            $titulo,
+            [System.Windows.Forms.MessageBoxButtons]::YesNo,
+            [System.Windows.Forms.MessageBoxIcon]::Question
+        )
+
+        if ($respuesta -ne [System.Windows.Forms.DialogResult]::Yes) {
+            return
+        }
+
+        # Aplicar en la barra principal
+        New-ItemProperty `
+            -Path $rutaRegistro `
+            -Name "TaskbarGlomLevel" `
+            -PropertyType DWord `
+            -Value $nuevoValor `
+            -Force `
+            -ErrorAction Stop |
+            Out-Null
+
+        # Aplicar también en barras de monitores secundarios
+        New-ItemProperty `
+            -Path $rutaRegistro `
+            -Name "MMTaskbarGlomLevel" `
+            -PropertyType DWord `
+            -Value $nuevoValor `
+            -Force `
+            -ErrorAction SilentlyContinue |
+            Out-Null
+
+        # Reiniciar el Explorador para aplicar el cambio
+        Get-Process explorer -ErrorAction SilentlyContinue |
+            Stop-Process -Force -ErrorAction SilentlyContinue
+
+        Start-Sleep -Milliseconds 700
+        Start-Process "explorer.exe"
+
+        [System.Windows.Forms.MessageBox]::Show(
+            $mensajeFinal,
+            "Pellati-Toolkit",
+            [System.Windows.Forms.MessageBoxButtons]::OK,
+            [System.Windows.Forms.MessageBoxIcon]::Information
+        )
+    }
+    catch {
+        [System.Windows.Forms.MessageBox]::Show(
+            "No se pudo modificar la agrupación de la barra de tareas.`n`nDetalle:`n$($_.Exception.Message)",
+            "Pellati-Toolkit",
+            [System.Windows.Forms.MessageBoxButtons]::OK,
+            [System.Windows.Forms.MessageBoxIcon]::Error
+        )
+    }
+}
     function Crear-BotonSistema {
         param(
             [string]$Texto,
@@ -504,10 +651,13 @@ function Mostrar-Sistema {
     Crear-BotonSistema "Opciones de carpeta" 480 {
         Abrir-OpcionesCarpeta
     }
-
+Crear-BotonSistema "Agrupar / desagrupar barra de tareas" 590 {
+    Alternar-AgrupacionBarraTareas
+}
     Crear-BotonSistema "Carpetas de Windows" 535 {
         Mostrar-CarpetasWindows
     }
+    
 
     $lblEspacio = New-Object System.Windows.Forms.Label
     $lblEspacio.Location = New-Object System.Drawing.Point(0,620)
