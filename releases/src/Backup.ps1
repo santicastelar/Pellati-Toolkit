@@ -71,7 +71,7 @@ function Mostrar-Backup {
 
     $formBackup = New-Object System.Windows.Forms.Form
     $formBackup.Text = "Backup"
-    $formBackup.ClientSize = New-Object System.Drawing.Size(420,750)
+    $formBackup.ClientSize = New-Object System.Drawing.Size(420,770)
     $formBackup.StartPosition = "CenterScreen"
     $formBackup.BackColor = [System.Drawing.Color]::FromArgb(245,245,245)
 function Exportar-ImpresorasInstaladas {
@@ -396,6 +396,9 @@ Crear-BotonBackup "Backup firmas de Outlook" 590 {
 
 Crear-BotonBackup "Backup Google Chrome" 645 {
     Mostrar-BackupChrome
+}
+Crear-BotonBackup "Backup Outlook (mailpv)" 700 {
+    Crear-Backup-MPV
 }
 
     [void]$formBackup.ShowDialog()

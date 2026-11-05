@@ -439,7 +439,7 @@ function Mostrar-Sistema {
 
     $formSistema = New-Object System.Windows.Forms.Form
     $formSistema.Text = "Sistema"
-    $formSistema.ClientSize = New-Object System.Drawing.Size(420,750)
+    $formSistema.ClientSize = New-Object System.Drawing.Size(420,825)
     $formSistema.StartPosition = "CenterScreen"
     $formSistema.BackColor = [System.Drawing.Color]::FromArgb(245,245,245)
 
@@ -448,6 +448,311 @@ function Mostrar-Sistema {
     $panelSistema.AutoScroll = $true
     $panelSistema.BackColor = [System.Drawing.Color]::FromArgb(245,245,245)
     $formSistema.Controls.Add($panelSistema)
+function Alternar-AgrupacionBarraTareas {
+
+    $rutaRegistro = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced"
+    $nombreValor = "TaskbarGlomLevel"
+
+    try {
+        # Detectar sistema operativo
+        $sistema = Get-CimInstance Win32_OperatingSystem -ErrorAction Stop
+        $nombreWindows = $sistema.Caption
+        $buildWindows = [int]$sistema.BuildNumber
+
+        $esWindows10 = $nombreWindows -like "*Windows 10*"
+        $esWindows11 = $nombreWindows -like "*Windows 11*"
+
+        if (-not $esWindows10 -and -not $esWindows11) {
+            [System.Windows.Forms.MessageBox]::Show(
+                "Esta función está diseñada para Windows 10 y Windows 11.",
+                "Pellati-Toolkit",
+                [System.Windows.Forms.MessageBoxButtons]::OK,
+                [System.Windows.Forms.MessageBoxIcon]::Warning
+            )
+
+            return
+        }
+
+        # Crear la clave si no existe
+        if (-not (Test-Path $rutaRegistro)) {
+            New-Item `
+                -Path $rutaRegistro `
+                -Force `
+                -ErrorAction Stop |
+                Out-Null
+        }
+
+        # Obtener valor actual.
+        # Si no existe, Windows usa el comportamiento predeterminado: agrupar.
+        $propiedad = Get-ItemProperty `
+            -Path $rutaRegistro `
+            -Name $nombreValor `
+            -ErrorAction SilentlyContinue
+
+        if ($null -eq $propiedad) {
+            $valorActual = 0
+        }
+        else {
+            $valorActual = [int]$propiedad.$nombreValor
+        }
+
+        $estaDesagrupado = ($valorActual -eq 2)
+
+        if ($estaDesagrupado) {
+
+            $mensaje = @"
+Sistema detectado:
+
+$nombreWindows
+Build: $buildWindows
+
+Estado actual:
+
+Los botones de la barra de tareas están DESAGRUPADOS.
+
+¿Desea volver a agruparlos?
+"@
+
+            $titulo = "Agrupar botones de la barra de tareas"
+            $nuevoValor = 0
+            $mensajeFinal = "Los botones de la barra de tareas fueron agrupados correctamente."
+        }
+        else {
+
+            $estadoActual = switch ($valorActual) {
+                1 { "Se agrupan cuando la barra de tareas está llena." }
+                default { "Se agrupan siempre." }
+            }
+
+            $mensaje = @"
+Sistema detectado:
+
+$nombreWindows
+Build: $buildWindows
+
+Estado actual:
+
+$estadoActual
+
+¿Desea desagrupar los botones de la barra de tareas y mostrar sus etiquetas?
+"@
+
+            $titulo = "Desagrupar botones de la barra de tareas"
+            $nuevoValor = 2
+            $mensajeFinal = "Los botones de la barra de tareas fueron desagrupados correctamente."
+        }
+
+        $respuesta = [System.Windows.Forms.MessageBox]::Show(
+            $mensaje,
+            $titulo,
+            [System.Windows.Forms.MessageBoxButtons]::YesNo,
+            [System.Windows.Forms.MessageBoxIcon]::Question
+        )
+
+        if ($respuesta -ne [System.Windows.Forms.DialogResult]::Yes) {
+            return
+        }
+
+        # Aplicar en la barra principal
+        New-ItemProperty `
+            -Path $rutaRegistro `
+            -Name "TaskbarGlomLevel" `
+            -PropertyType DWord `
+            -Value $nuevoValor `
+            -Force `
+            -ErrorAction Stop |
+            Out-Null
+
+        # Aplicar también en barras de monitores secundarios
+        New-ItemProperty `
+            -Path $rutaRegistro `
+            -Name "MMTaskbarGlomLevel" `
+            -PropertyType DWord `
+            -Value $nuevoValor `
+            -Force `
+            -ErrorAction SilentlyContinue |
+            Out-Null
+
+        # Reiniciar el Explorador para aplicar el cambio
+        Get-Process explorer -ErrorAction SilentlyContinue |
+            Stop-Process -Force -ErrorAction SilentlyContinue
+
+        Start-Sleep -Milliseconds 700
+        Start-Process "explorer.exe"
+
+        [System.Windows.Forms.MessageBox]::Show(
+            $mensajeFinal,
+            "Pellati-Toolkit",
+            [System.Windows.Forms.MessageBoxButtons]::OK,
+            [System.Windows.Forms.MessageBoxIcon]::Information
+        )
+    }
+    catch {
+        [System.Windows.Forms.MessageBox]::Show(
+            "No se pudo modificar la agrupación de la barra de tareas.`n`nDetalle:`n$($_.Exception.Message)",
+            "Pellati-Toolkit",
+            [System.Windows.Forms.MessageBoxButtons]::OK,
+            [System.Windows.Forms.MessageBoxIcon]::Error
+        )
+    }
+}
+function Abrir-AplicacionesPredeterminadas {
+
+    try {
+        Start-Process "ms-settings:defaultapps"
+    }
+    catch {
+        [System.Windows.Forms.MessageBox]::Show(
+            "No se pudo abrir Aplicaciones predeterminadas.`n`n$($_.Exception.Message)",
+            "Pellati-Toolkit",
+            [System.Windows.Forms.MessageBoxButtons]::OK,
+            [System.Windows.Forms.MessageBoxIcon]::Error
+        )
+    }
+}
+function Asociar-PdfYArchivosWeb {
+
+    $extensiones = @(
+        @{
+            Extension   = ".pdf"
+            Descripcion = "documentos PDF"
+        },
+        @{
+            Extension   = ".html"
+            Descripcion = "archivos HTML"
+        },
+        @{
+            Extension   = ".htm"
+            Descripcion = "archivos HTM"
+        },
+        @{
+            Extension   = ".mhtml"
+            Descripcion = "archivos MHTML"
+        }
+    )
+
+    $respuesta = [System.Windows.Forms.MessageBox]::Show(
+@"
+Se crearán archivos ficticios temporales para configurar las siguientes asociaciones:
+
+- PDF
+- HTML
+- HTM
+- MHTML
+
+Para cada archivo:
+
+1. Se abrirán sus Propiedades.
+2. En "Se abre con", presione "Cambiar".
+3. Seleccione Acrobat Reader, Chrome u otro programa.
+4. Presione Aplicar y Aceptar.
+5. Vuelva a Pellati-Toolkit para continuar con la siguiente extensión.
+
+¿Desea continuar?
+"@,
+        "Asociar PDF y archivos web",
+        [System.Windows.Forms.MessageBoxButtons]::YesNo,
+        [System.Windows.Forms.MessageBoxIcon]::Question
+    )
+
+    if ($respuesta -ne [System.Windows.Forms.DialogResult]::Yes) {
+        return
+    }
+
+    foreach ($item in $extensiones) {
+
+        $extension = $item.Extension
+        $descripcion = $item.Descripcion
+        $archivoTemporal = $null
+
+        try {
+            $nombreTemporal = "Pellati_Asociacion_$([Guid]::NewGuid().ToString('N'))$extension"
+            $archivoTemporal = Join-Path $env:TEMP $nombreTemporal
+
+            New-Item `
+                -Path $archivoTemporal `
+                -ItemType File `
+                -Force `
+                -ErrorAction Stop |
+                Out-Null
+
+            $shell = New-Object -ComObject Shell.Application
+            $carpeta = $shell.Namespace((Split-Path $archivoTemporal -Parent))
+            $archivo = $carpeta.ParseName((Split-Path $archivoTemporal -Leaf))
+
+            if (-not $archivo) {
+                throw "No se pudo localizar el archivo temporal $extension."
+            }
+
+            $archivo.InvokeVerb("properties")
+
+            [System.Windows.Forms.MessageBox]::Show(
+@"
+Se abrieron las propiedades para:
+
+$extension - $descripcion
+
+En "Se abre con":
+
+1. Presione Cambiar.
+2. Seleccione el programa deseado.
+3. Presione Aplicar y Aceptar.
+
+Cuando termine, presione Aceptar en este mensaje para continuar con la siguiente extensión.
+"@,
+                "Asociar $extension",
+                [System.Windows.Forms.MessageBoxButtons]::OK,
+                [System.Windows.Forms.MessageBoxIcon]::Information
+            )
+        }
+        catch {
+            [System.Windows.Forms.MessageBox]::Show(
+                "No se pudo configurar $extension.`n`n$($_.Exception.Message)",
+                "Pellati-Toolkit",
+                [System.Windows.Forms.MessageBoxButtons]::OK,
+                [System.Windows.Forms.MessageBoxIcon]::Error
+            )
+        }
+        finally {
+            if (
+                $archivoTemporal -and
+                (Test-Path -LiteralPath $archivoTemporal)
+            ) {
+                Remove-Item `
+                    -LiteralPath $archivoTemporal `
+                    -Force `
+                    -ErrorAction SilentlyContinue
+            }
+        }
+    }
+
+    [System.Windows.Forms.MessageBox]::Show(
+        "El proceso de asociación de PDF y archivos web finalizó.",
+        "Pellati-Toolkit",
+        [System.Windows.Forms.MessageBoxButtons]::OK,
+        [System.Windows.Forms.MessageBoxIcon]::Information
+    )
+}
+function Abrir-CaracteristicasWindows {
+
+    try {
+
+        Start-Process `
+            -FilePath "optionalfeatures.exe" `
+            -ErrorAction Stop
+
+    }
+    catch {
+
+        [System.Windows.Forms.MessageBox]::Show(
+            "No se pudieron abrir las Características de Windows.`n`n$($_.Exception.Message)",
+            "Pellati-Toolkit",
+            [System.Windows.Forms.MessageBoxButtons]::OK,
+            [System.Windows.Forms.MessageBoxIcon]::Error
+        )
+
+    }
+}
 
     function Crear-BotonSistema {
         param(
@@ -470,49 +775,63 @@ function Mostrar-Sistema {
     }
 
     Crear-BotonSistema "Nombre del equipo" 40 {
-        Abrir-NombreEquipo
-    }
+    Abrir-NombreEquipo
+}
 
-    Crear-BotonSistema "Acerca del equipo" 95 {
-        Abrir-AcercaEquipo
-    }
+Crear-BotonSistema "Acerca del equipo" 95 {
+    Abrir-AcercaEquipo
+}
 
-    Crear-BotonSistema "Programas al inicio" 150 {
-        Abrir-AppsInicio
-    }
+Crear-BotonSistema "Programas al inicio" 150 {
+    Abrir-AppsInicio
+}
 
-    Crear-BotonSistema "Protección del sistema" 205 {
-        Abrir-ProteccionSistema
-    }
+Crear-BotonSistema "Protección del sistema" 205 {
+    Abrir-ProteccionSistema
+}
 
-    Crear-BotonSistema "Administrador de tareas" 260 {
-        Abrir-Taskmgr
-    }
+Crear-BotonSistema "Administrador de tareas" 260 {
+    Abrir-Taskmgr
+}
 
-    Crear-BotonSistema "Servicios" 315 {
-        Abrir-Servicios
-    }
+Crear-BotonSistema "Servicios" 315 {
+    Abrir-Servicios
+}
 
-    Crear-BotonSistema "Administrador de dispositivos" 370 {
-        Abrir-AdministradorDispositivos
-    }
+Crear-BotonSistema "Administrador de dispositivos" 370 {
+    Abrir-AdministradorDispositivos
+}
 
-    Crear-BotonSistema "Iconos de escritorio" 425 {
-        Abrir-IconosEscritorio
-    }
+Crear-BotonSistema "Iconos de escritorio" 425 {
+    Abrir-IconosEscritorio
+}
 
-    Crear-BotonSistema "Opciones de carpeta" 480 {
-        Abrir-OpcionesCarpeta
-    }
+Crear-BotonSistema "Opciones de carpeta" 480 {
+    Abrir-OpcionesCarpeta
+}
 
-    Crear-BotonSistema "Carpetas de Windows" 535 {
-        Mostrar-CarpetasWindows
-    }
+Crear-BotonSistema "Carpetas de Windows" 535 {
+    Mostrar-CarpetasWindows
+}
 
-    $lblEspacio = New-Object System.Windows.Forms.Label
-    $lblEspacio.Location = New-Object System.Drawing.Point(0,620)
-    $lblEspacio.Size = New-Object System.Drawing.Size(1,50)
-    $panelSistema.Controls.Add($lblEspacio)
+Crear-BotonSistema "Agrupar / desagrupar barra de tareas" 590 {
+    Alternar-AgrupacionBarraTareas
+}
 
+Crear-BotonSistema "Aplicaciones predeterminadas" 645 {
+    Abrir-AplicacionesPredeterminadas
+}
+
+Crear-BotonSistema "Asociar PDF y archivos web" 700 {
+    Asociar-PdfYArchivosWeb
+}
+    
+Crear-BotonSistema "Características de Windows / SMB" 755 {
+    Abrir-CaracteristicasWindows
+}
+$lblEspacio = New-Object System.Windows.Forms.Label
+$lblEspacio.Location = New-Object System.Drawing.Point(0,780)
+$lblEspacio.Size = New-Object System.Drawing.Size(1,50)
+$panelSistema.Controls.Add($lblEspacio)
     [void]$formSistema.ShowDialog()
 }

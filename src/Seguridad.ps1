@@ -462,11 +462,41 @@ Los archivos ubicados allí no serán analizados normalmente por Defender.
 
     [void]$formRuta.ShowDialog()
 }
+function Abrir-SmartAppControl {
 
+    $buildWindows = [Environment]::OSVersion.Version.Build
+
+    if ($buildWindows -lt 22000) {
+        [System.Windows.Forms.MessageBox]::Show(
+            "Smart App Control está disponible únicamente en Windows 11.",
+            "Pellati-Toolkit",
+            "OK",
+            "Information"
+        )
+        return
+    }
+
+    try {
+        Start-Process "windowsdefender://smartapp/" -ErrorAction Stop
+    }
+    catch {
+        try {
+            Start-Process "windowsdefender://appbrowser/" -ErrorAction Stop
+        }
+        catch {
+            [System.Windows.Forms.MessageBox]::Show(
+                "No se pudo abrir Seguridad de Windows.",
+                "Pellati-Toolkit",
+                "OK",
+                "Error"
+            )
+        }
+    }
+}
 function Mostrar-Seguridad {
     $formSeguridad = New-Object System.Windows.Forms.Form
     $formSeguridad.Text = "Seguridad"
-    $formSeguridad.ClientSize = New-Object System.Drawing.Size(420,390)
+    $formSeguridad.ClientSize = New-Object System.Drawing.Size(420,450)
     $formSeguridad.StartPosition = "CenterScreen"
     $formSeguridad.FormBorderStyle = "FixedDialog"
     $formSeguridad.MaximizeBox = $false
@@ -514,6 +544,9 @@ function Mostrar-Seguridad {
     Crear-BotonSeguridad "Abrir Seguridad de Windows" 315 {
         Abrir-SeguridadWindowsDefender
     }
+    Crear-BotonSeguridad "Smart App Control (Windows 11)" 370 {
+    Abrir-SmartAppControl
+}
 
     [void]$formSeguridad.ShowDialog()
 }

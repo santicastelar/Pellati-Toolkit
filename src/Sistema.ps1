@@ -439,7 +439,7 @@ function Mostrar-Sistema {
 
     $formSistema = New-Object System.Windows.Forms.Form
     $formSistema.Text = "Sistema"
-    $formSistema.ClientSize = New-Object System.Drawing.Size(420,800)
+    $formSistema.ClientSize = New-Object System.Drawing.Size(420,825)
     $formSistema.StartPosition = "CenterScreen"
     $formSistema.BackColor = [System.Drawing.Color]::FromArgb(245,245,245)
 
@@ -733,6 +733,27 @@ Cuando termine, presione Aceptar en este mensaje para continuar con la siguiente
         [System.Windows.Forms.MessageBoxIcon]::Information
     )
 }
+function Abrir-CaracteristicasWindows {
+
+    try {
+
+        Start-Process `
+            -FilePath "optionalfeatures.exe" `
+            -ErrorAction Stop
+
+    }
+    catch {
+
+        [System.Windows.Forms.MessageBox]::Show(
+            "No se pudieron abrir las Características de Windows.`n`n$($_.Exception.Message)",
+            "Pellati-Toolkit",
+            [System.Windows.Forms.MessageBoxButtons]::OK,
+            [System.Windows.Forms.MessageBoxIcon]::Error
+        )
+
+    }
+}
+
     function Crear-BotonSistema {
         param(
             [string]$Texto,
@@ -805,7 +826,9 @@ Crear-BotonSistema "Asociar PDF y archivos web" 700 {
     Asociar-PdfYArchivosWeb
 }
     
-
+Crear-BotonSistema "Características de Windows / SMB" 755 {
+    Abrir-CaracteristicasWindows
+}
 $lblEspacio = New-Object System.Windows.Forms.Label
 $lblEspacio.Location = New-Object System.Drawing.Point(0,780)
 $lblEspacio.Size = New-Object System.Drawing.Size(1,50)

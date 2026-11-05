@@ -93,6 +93,7 @@ function Crear-Boton {
 }
 
 # Botones principales
+
 Crear-Boton "Sistema" 100 {
     Mostrar-Sistema
 }

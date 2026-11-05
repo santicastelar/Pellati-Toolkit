@@ -224,11 +224,49 @@ function Mostrar-Programas {
 
     $formProgramas = New-Object System.Windows.Forms.Form
     $formProgramas.Text = "Programas"
-    $formProgramas.ClientSize = New-Object System.Drawing.Size(420,700)
+    $formProgramas.ClientSize = New-Object System.Drawing.Size(420,730)
     $formProgramas.StartPosition = "CenterScreen"
     $formProgramas.BackColor = [System.Drawing.Color]::FromArgb(245,245,245)
+function Abrir-AcrobatReader {
 
-    function Crear-BotonProgramas {
+    $ruta = Join-Path $ToolsPath "Acrobat\Reader_es_install.exe"
+
+    if (Test-Path $ruta) {
+
+        Start-Process $ruta
+
+    }
+    else {
+
+        [System.Windows.Forms.MessageBox]::Show(
+            "No se encontró Reader_es_install.exe.",
+            "Pellati-Toolkit",
+            [System.Windows.Forms.MessageBoxButtons]::OK,
+            [System.Windows.Forms.MessageBoxIcon]::Error
+        )
+
+    }
+function Abrir-RustDesk {
+
+    $ruta = Join-Path $ToolsPath "Rustdesk\rustdesk-1.5.1-x86_64.exe"
+
+    if (Test-Path $ruta) {
+
+        Start-Process -FilePath $ruta
+
+    }
+    else {
+
+        [System.Windows.Forms.MessageBox]::Show(
+            "No se encontró RustDesk en:`n$ruta",
+            "Pellati-Toolkit",
+            [System.Windows.Forms.MessageBoxButtons]::OK,
+            [System.Windows.Forms.MessageBoxIcon]::Error
+        )
+
+    }
+}
+}    function Crear-BotonProgramas {
         param(
             [string]$Texto,
             [int]$Y,
@@ -267,24 +305,32 @@ Crear-BotonProgramas "TeamViewer 12" 260 {
     Abrir-TeamViewer12
 }
 
-Crear-BotonProgramas "AnyDesk" 315 {
+Crear-BotonProgramas "RustDesk" 315 {
+    Abrir-RustDesk
+}
+
+Crear-BotonProgramas "AnyDesk" 370 {
     Abrir-AnyDesk
 }
 
-Crear-BotonProgramas "Reset AnyDesk" 370 {
+Crear-BotonProgramas "Reset AnyDesk" 425 {
     Reset-AnyDesk
 }
 
-Crear-BotonProgramas "Lightshot" 425 {
+Crear-BotonProgramas "Lightshot" 480 {
     Instalar-LightShot
 }
 
-Crear-BotonProgramas "Everything Portable" 480 {
+Crear-BotonProgramas "Everything Portable" 535 {
     Abrir-EverythingPortable
 }
 
-Crear-BotonProgramas "Lightshot Portable" 535 {
+Crear-BotonProgramas "Lightshot Portable" 590 {
     Abrir-Lightshot
+}
+
+Crear-BotonProgramas "Adobe Acrobat Reader" 645 {
+    Abrir-AcrobatReader
 }
     [void]$formProgramas.ShowDialog()
 }
